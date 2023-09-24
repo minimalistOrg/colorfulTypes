@@ -1,4 +1,9 @@
 # Colorful Types
 
-Have a fast peek at entire codebases for static languages.
-Currently focused on Typescript/Tsx.
+Have a fast peek at an entire codebase for static languages.
+POC is currently only focused on Typescript/Tsx.
+
+## Versions
+
+node: 18.18.0
+npm: 9.8.1

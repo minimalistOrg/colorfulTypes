@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
-import './App.css'
 import Parser from 'web-tree-sitter'
+
+import './App.css'
+
+import { repoService } from './utils/repoService';
 
 export function App() {
   useEffect(() => {
@@ -11,6 +14,7 @@ export function App() {
       const Tsx = await Parser.Language.load('/tree-sitter-languages/tree-sitter-tsx.wasm');
       parser.setLanguage(Tsx)
 
+      repoService.getProject('https://github.com/minimalistOrg/minimalistIdeV2');
       const sourceCode = 'let x = 1; console.log(x);';
       const tree = parser.parse(sourceCode);
     }
