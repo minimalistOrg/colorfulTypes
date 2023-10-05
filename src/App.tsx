@@ -6,6 +6,21 @@ import { parse } from './utils/parser';
 // import { repoService } from './utils/repoService';
 
 const exampleCode = `
+export interface MyFunction {
+  name: string;
+  arguments: MyArgument[];
+  returnType?: MyReturnType;
+}
+
+export interface MyInterface {
+  name: string;
+}
+
+export interface Codebase {
+  myInterfaces: MyInterface[];
+  myFunctions: MyFunction[];
+}
+
 const noParams = (): void => {};
 
 const getWasmFile = (language: Language) => {

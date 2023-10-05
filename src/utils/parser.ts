@@ -52,13 +52,34 @@ const buildReturnType = (capture: QueryCapture): MyReturnType | undefined => {
   }
 }
 
-const buildFunctions = (captures: QueryCapture[]): MyFunction[] => {
-  return captures.map(capture => ({
+const buildFunction = (capture: QueryCapture): MyFunction => {
+  return {
     name: capture.node.children[1]?.children[0]?.text,
     arguments: buildArgument(capture),
     returnType: buildReturnType(capture)
-  }));
+  };
 };
+
+const buildInterface = (capture: QueryCapture): MyInterface => {
+  return {
+    name: capture.node.children[1]?.text
+  };
+};
+
+const buildCodebase = (captures: QueryCapture[]): Codebase => {
+  const myFunctions: MyFunction[] = [];
+  const myInterfaces: MyInterface[] = [];
+
+  captures.forEach(capture => {
+    if (capture.name === 'definition.interface') {
+      myInterfaces.push(buildInterface(capture));
+    } else if (capture.name === 'definition.function') {
+      myFunctions.push(buildFunction(capture));
+    }
+  });
+
+  return { myFunctions, myInterfaces };
+}
 
 export const parse = async (code: string): Promise<Codebase> => {
   await Parser.init();
@@ -67,15 +88,14 @@ export const parse = async (code: string): Promise<Codebase> => {
   const Tsx = await Parser.Language.load('/tree-sitter-languages/tree-sitter-tsx.wasm');
   parser.setLanguage(Tsx);
 
-  const arrowFunctionQuery =
-    "(lexical_declaration (variable_declarator name:(identifier) value:(arrow_function))) @definition.function";
+  const typesQuery = `
+    [
+      (interface_declaration) @definition.interface
+      (lexical_declaration (variable_declarator name:(identifier) value:(arrow_function))) @definition.function
+    ]
+  `;
   const tree = parser.parse(code);
+  const query = Tsx.query(typesQuery);
 
-  const query = Tsx.query(arrowFunctionQuery);
-  const captures = query.captures(tree.rootNode);
-
-  return {
-    myFunctions: buildFunctions(captures),
-    myInterfaces: []
-  };
+  return buildCodebase(query.captures(tree.rootNode));
 };
