@@ -1,25 +1,32 @@
 import { useEffect } from 'react';
-import Parser from 'web-tree-sitter'
 
 import './App.css'
+import { parse } from './utils/parser';
 
-import { repoService } from './utils/repoService';
+// import { repoService } from './utils/repoService';
+
+const exampleCode = `
+const noParams = (): void => {};
+
+const getWasmFile = (language: Language) => {
+  if (language === 'javascript') {
+    return '/assets/TreeSitter/tree-sitter-javascript.wasm'
+  } else if (language === 'typescript') {
+    return '/assets/TreeSitter/tree-sitter-tsx.wasm'
+  }
+};
+
+const func2 = (language: string, b: number) => {};
+`;
 
 export function App() {
   useEffect(() => {
-    const initTreeSitter = async () => {
-      await Parser.init()
-      const parser = new Parser()
+    const getFunctions = async () => {
+      const functions = await parse(exampleCode);
+      const x = 1;
+    };
 
-      const Tsx = await Parser.Language.load('/tree-sitter-languages/tree-sitter-tsx.wasm');
-      parser.setLanguage(Tsx)
-
-      repoService.getProject('https://github.com/minimalistOrg/minimalistIdeV2');
-      const sourceCode = 'let x = 1; console.log(x);';
-      const tree = parser.parse(sourceCode);
-    }
-
-    initTreeSitter()
+    getFunctions();
   }, [])
 
   return (
