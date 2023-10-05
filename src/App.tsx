@@ -22,7 +22,7 @@ const func2 = (language: string, b: number) => {};
 export function App() {
   useEffect(() => {
     const getFunctions = async () => {
-      const functions = await parse(exampleCode);
+      const codebase = await parse(exampleCode);
       const x = 1;
     };
 

@@ -17,6 +17,15 @@ export interface MyFunction {
   returnType?: MyReturnType;
 }
 
+export interface MyInterface {
+  name: string;
+}
+
+export interface Codebase {
+  myInterfaces: MyInterface[];
+  myFunctions: MyFunction[];
+}
+
 const buildArgument = (capture: QueryCapture): MyArgument[] => {
   const functionArguments = capture.node.children[1]?.children[2]?.children[0]?.children;
   const myArguments = [];
@@ -43,15 +52,15 @@ const buildReturnType = (capture: QueryCapture): MyReturnType | undefined => {
   }
 }
 
-const build = (capture: QueryCapture): MyFunction => {
-  return {
+const buildFunctions = (captures: QueryCapture[]): MyFunction[] => {
+  return captures.map(capture => ({
     name: capture.node.children[1]?.children[0]?.text,
     arguments: buildArgument(capture),
     returnType: buildReturnType(capture)
-  };
+  }));
 };
 
-export const parse = async (code: string): Promise<MyFunction[]> => {
+export const parse = async (code: string): Promise<Codebase> => {
   await Parser.init();
   const parser = new Parser();
 
@@ -63,5 +72,10 @@ export const parse = async (code: string): Promise<MyFunction[]> => {
   const tree = parser.parse(code);
 
   const query = Tsx.query(arrowFunctionQuery);
-  return query.captures(tree.rootNode).map(build);
+  const captures = query.captures(tree.rootNode);
+
+  return {
+    myFunctions: buildFunctions(captures),
+    myInterfaces: []
+  };
 };
