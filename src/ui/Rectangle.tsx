@@ -1,7 +1,20 @@
-import { Position } from "../types";
+import { Color, Position } from "../types";
 
-export const Rectangle = ({ position }: { position: Position}) => {
+export const Rectangle = ({
+  position,
+  color,
+}: {
+  position: Position,
+  color: Color,
+}) => {
   return (
-    <rect x={position.x} y={position.y} width="30" height="30" style={{ fill: 'rgb(0, 0, 255)' }} rx="5" />
+    <rect
+      x={position.x}
+      y={position.y}
+      width="30"
+      height="30"
+      style={{ fill: `hsl(${color.hue}, 80%, ${color.l}%)` }}
+      rx="5"
+    />
   );
 };
