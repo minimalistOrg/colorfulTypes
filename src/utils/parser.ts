@@ -1,6 +1,6 @@
 import Parser, { QueryCapture } from "web-tree-sitter";
 
-export interface MyArgument {
+export interface MyParameter {
   name: string;
   type: string;
   predefinedType: boolean;
@@ -13,7 +13,7 @@ export interface MyReturnType {
 
 export interface MyFunction {
   name: string;
-  arguments: MyArgument[];
+  parameters: MyParameter[];
   returnType: MyReturnType;
 }
 
@@ -26,19 +26,19 @@ export interface Codebase {
   myFunctions: MyFunction[];
 }
 
-const buildArgument = (capture: QueryCapture): MyArgument[] => {
-  const functionArguments = capture.node.children[1]?.children[2]?.children[0]?.children;
-  const myArguments = [];
+const buildParameter = (capture: QueryCapture): MyParameter[] => {
+  const functionParameters = capture.node.children[1]?.children[2]?.children[0]?.children;
+  const myParameters = [];
 
-  for(let i=1; i < functionArguments.length - 1; i+=2) {
-    myArguments.push({
-      name: functionArguments[i]?.children[0]?.text,
-      type: functionArguments[i]?.children[1]?.children[1]?.text,
-      predefinedType: functionArguments[i]?.children[1]?.children[1]?.type === 'predefined_type'
+  for(let i=1; i < functionParameters.length - 1; i+=2) {
+    myParameters.push({
+      name: functionParameters[i]?.children[0]?.text,
+      type: functionParameters[i]?.children[1]?.children[1]?.text,
+      predefinedType: functionParameters[i]?.children[1]?.children[1]?.type === 'predefined_type'
     });
   }
 
-  return myArguments;
+  return myParameters;
 };
 
 const buildReturnType = (capture: QueryCapture): MyReturnType => {
@@ -60,7 +60,7 @@ const buildReturnType = (capture: QueryCapture): MyReturnType => {
 const buildFunction = (capture: QueryCapture): MyFunction => {
   return {
     name: capture.node.children[1]?.children[0]?.text,
-    arguments: buildArgument(capture),
+    parameters: buildParameter(capture),
     returnType: buildReturnType(capture)
   };
 };

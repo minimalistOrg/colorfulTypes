@@ -10,10 +10,10 @@ export const UiFunction = ({
 }) => {
   return (
     <div className={styles.uiFunction}>
-      <div className={styles.uiArguments}>
+      <div className={styles.uiParameters}>
         <p>(</p>
-        {myFunction.arguments.map(myArgument => (
-          <UiType name={myArgument.type} key={myArgument.name} />
+        {myFunction.parameters.map(myParameter => (
+          <UiType name={myParameter.type} key={myParameter.name} />
         ))}
         <p>)</p>
       </div>

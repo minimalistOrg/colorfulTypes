@@ -10,7 +10,7 @@ import { UiFunction } from './ui/UiFunction';
 const exampleCode = `
 export interface MyFunction {
   name: string;
-  arguments: MyArgument[];
+  parameters: MyParameter[];
   returnType?: MyReturnType;
 }
 
