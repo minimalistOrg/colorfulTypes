@@ -1,18 +1,40 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+:root {
+  /* color-scheme: light dark; */
 
   --ui-type-size: 3rem;
   --ui-type-border-radius: 0.5rem;
 }
 
 html {
-  font-size: 10px;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 8px;
+  font-weight: 400;
 }
 
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 5rem;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Utility classes */
 .flex {
   display: flex;
   vertical-align: middle;
+  gap: 0.5rem;
 }
