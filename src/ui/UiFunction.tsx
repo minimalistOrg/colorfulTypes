@@ -15,7 +15,7 @@ export const UiFunction = ({
     <div className={classNames('flex', styles.uiFunction)}>
       <p>(</p>
       {myFunction.arguments.map(myArgument => (
-        <UiType color={nameToColor(myArgument.type)} />
+        <UiType color={nameToColor(myArgument.type)} key={myArgument.name} />
       ))}
       <p>)</p>
     </div>

@@ -18,7 +18,7 @@ export const nameToColor = (string: string): Color => {
   const rowSize = colorSpaceSize / 7;
 
   return {
-    l: (colorIndex / rowSize / 10) + 0.3,
+    l: (colorIndex / rowSize * 10) + 30,
     hue: colorIndex % rowSize
   }
 };

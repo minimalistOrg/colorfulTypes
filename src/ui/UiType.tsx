@@ -9,7 +9,7 @@ export const UiType = ({
   return (
     <div
       className={styles.uiType}
-      style={{ backgroundColor: `oklch(${color.l} 0.3 ${color.hue})` }}
+      style={{ backgroundColor: `oklch(${color.l}% 0.3 ${color.hue})` }}
     />
   )
 };

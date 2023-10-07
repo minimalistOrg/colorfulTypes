@@ -3,14 +3,14 @@
 
   --ui-text-color: #424242;
 
-  --ui-type-size: 3rem;
-  --ui-type-border-radius: 0.5rem;
+  --ui-type-size: 1.5rem;
+  --ui-type-border-radius: 0.25rem;
 }
 
 html {
   color: var(--ui-text-color);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 8px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
 }
@@ -22,10 +22,10 @@ body {
 }
 
 h1 {
-  font-size: 5rem;
+  font-size: 2.5rem;
   line-height: 1.2;
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 p {
@@ -35,12 +35,12 @@ p {
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 /* Utility classes */
 .flex {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }

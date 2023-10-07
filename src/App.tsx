@@ -59,7 +59,7 @@ export function App() {
 
       <div>
         {codebase.myFunctions.map(myFunction => (
-          <UiFunction myFunction={myFunction} />
+          <UiFunction myFunction={myFunction} key={myFunction.name} />
         ))}
       </div>
     </>
