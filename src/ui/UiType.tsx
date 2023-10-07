@@ -1,14 +1,14 @@
 import { Color } from "../types";
-import styles from "./UiFunction.module.css";
+import styles from "./UiType.module.css";
 
-export const UiFunction = ({
+export const UiType = ({
   color,
 }: {
   color: Color,
 }) => {
   return (
     <div
-      className={styles.uiFunction}
+      className={styles.uiType}
       style={{ backgroundColor: `oklch(${color.l} 0.3 ${color.hue})` }}
     />
   )
