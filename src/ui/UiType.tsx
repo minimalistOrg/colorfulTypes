@@ -1,11 +1,13 @@
-import { Color } from "../types";
+import { nameToColor } from "../utils/nameToColor";
 import styles from "./UiType.module.css";
 
 export const UiType = ({
-  color,
+  name,
 }: {
-  color: Color,
+  name: string,
 }) => {
+  const color = nameToColor(name);
+
   return (
     <div
       className={styles.uiType}
