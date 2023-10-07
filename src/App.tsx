@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import './App.css'
 import { parse } from './utils/parser';
+import { nameToColor } from './utils/stringToColor';
 
 // import { repoService } from './utils/repoService';
 
@@ -38,7 +39,9 @@ export function App() {
   useEffect(() => {
     const getFunctions = async () => {
       const codebase = await parse(exampleCode);
-      const x = 1;
+      const x = ['a', 'e', 'i', 'm', 'q', 'u', 'y'];
+      const colors = x.map(nameToColor);
+      const y = 1;
     };
 
     getFunctions();
