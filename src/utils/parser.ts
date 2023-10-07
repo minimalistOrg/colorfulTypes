@@ -14,7 +14,7 @@ export interface MyReturnType {
 export interface MyFunction {
   name: string;
   arguments: MyArgument[];
-  returnType?: MyReturnType;
+  returnType: MyReturnType;
 }
 
 export interface MyInterface {
@@ -41,14 +41,19 @@ const buildArgument = (capture: QueryCapture): MyArgument[] => {
   return myArguments;
 };
 
-const buildReturnType = (capture: QueryCapture): MyReturnType | undefined => {
+const buildReturnType = (capture: QueryCapture): MyReturnType => {
   const returnValue = capture.node.children[1]?.children[2]?.children[1]?.children[1];
 
   if (returnValue) {
     return {
       type: returnValue.children[0]?.type,
-      predefinedType: returnValue.type === 'predefined_type'
+      predefinedType: returnValue.type === 'predefined_type',
     }
+  }
+
+  return {
+    type: 'void',
+    predefinedType: true,
   }
 }
 

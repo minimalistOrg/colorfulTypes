@@ -1,9 +1,16 @@
 .uiFunction {
-  font-size: 1rem;
-  line-height: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
   margin-bottom: 0.75rem;
 }
 
-.uiFunction p {
-  height: 1rem;
+.uiArguments {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  font-size: 1rem;
+  line-height: 1rem;
 }
