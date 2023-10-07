@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import './App.css'
-import { parse } from './utils/parser';
-import { nameToColor } from './utils/stringToColor';
-import { Rectangle } from './ui/Rectangle';
+import './App.css';
+
+import { Codebase, parse } from './utils/parser';
+import { UiFunction } from './ui/UiFunction';
 
 // import { repoService } from './utils/repoService';
 
@@ -25,7 +25,7 @@ export interface Codebase {
 
 const noParams = (): void => {};
 
-const getWasmFile = (language: Language) => {
+const getWasmFile = (language: Language): void => {
   if (language === 'javascript') {
     return '/assets/TreeSitter/tree-sitter-javascript.wasm'
   } else if (language === 'typescript') {
@@ -33,28 +33,35 @@ const getWasmFile = (language: Language) => {
   }
 };
 
-const func2 = (language: string, b: number) => {};
+const func2 = (language: string, b: number): number => {};
 `;
 
+const emptyCodebase = {
+  myFunctions: [],
+  myInterfaces: [],
+};
+
 export function App() {
+  const [codebase, setCodebase] = useState<Codebase>(emptyCodebase);
+
   useEffect(() => {
-    const getFunctions = async () => {
+    const getCodebase = async () => {
       const codebase = await parse(exampleCode);
-      const x = ['a', 'e', 'i', 'm', 'q', 'u', 'y'];
-      const colors = x.map(nameToColor);
-      const y = 1;
+      setCodebase(codebase);
     };
 
-    getFunctions();
+    getCodebase();
   }, [])
 
   return (
     <>
       <h1>Colorful types</h1>
 
-      <svg width="800" height="600">
-        <Rectangle position={{ x: 10, y: 10 }} />
-      </svg>
+      <div>
+        {codebase.myFunctions.map(myFunction => (
+          <UiFunction myFunction={myFunction} />
+        ))}
+      </div>
     </>
   )
 }
