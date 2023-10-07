@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import './App.css'
 import { parse } from './utils/parser';
 import { nameToColor } from './utils/stringToColor';
+import { Rectangle } from './ui/Rectangle';
 
 // import { repoService } from './utils/repoService';
 
@@ -49,7 +50,11 @@ export function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>Colorful types</h1>
+
+      <svg width="800" height="600">
+        <Rectangle position={{ x: 10, y: 10 }} />
+      </svg>
     </>
   )
 }

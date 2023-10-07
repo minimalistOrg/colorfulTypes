@@ -20,7 +20,7 @@ const getRepositoryFiles = async (url: URL, extensions: string[], callback: (sou
 
   // return sourceFileInfos.map(fileInfo => reader.getTextFile(fileInfo.name))
   return tree;
-}
+};
 
 export const repoService = {
   getProject: async (urlString: string, extensions: string[], callback: (source: string) => any) => {
@@ -29,4 +29,4 @@ export const repoService = {
 
     return tree;
   }
-}
+};
