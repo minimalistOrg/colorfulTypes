@@ -6,11 +6,17 @@
   margin-bottom: 0.75rem;
 }
 
-.uiParameters {
+.uiParameterGroup {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 
   font-size: 1rem;
   line-height: 1rem;
+}
+
+.uiParameters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

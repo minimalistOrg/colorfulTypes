@@ -10,11 +10,15 @@ export const UiFunction = ({
 }) => {
   return (
     <div className={styles.uiFunction}>
-      <div className={styles.uiParameters}>
+      <div className={styles.uiParameterGroup}>
         <p>(</p>
-        {myFunction.parameters.map(myParameter => (
-          <UiType name={myParameter.type} key={myParameter.name} />
-        ))}
+
+        <div className={styles.uiParameters}>
+          {myFunction.parameters.map(myParameter => (
+            <UiType name={myParameter.type} key={myParameter.name} />
+          ))}
+        </div>
+
         <p>)</p>
       </div>
 
