@@ -3,4 +3,16 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+
+  --ui-type-size: 3rem;
+  --ui-type-border-radius: 0.5rem;
+}
+
+html {
+  font-size: 10px;
+}
+
+.flex {
+  display: flex;
+  vertical-align: middle;
 }

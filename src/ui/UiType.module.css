@@ -1,0 +1,5 @@
+.uiType {
+  width: var(--ui-type-size);
+  height: var(--ui-type-size);
+  border-radius: var(--ui-type-border-radius);
+}

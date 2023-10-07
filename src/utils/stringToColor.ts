@@ -1,3 +1,5 @@
+import { Color } from "../types";
+
 const aCharCode = 'a'.charCodeAt(0);
 const nLetters = 'z'.charCodeAt(0) - aCharCode + 1;
 
@@ -10,7 +12,7 @@ const getColorIndex = (string: string) => {
   return firstLetterIndex + secondLetterIndex;
 };
 
-export const nameToColor = (string: string) => {
+export const nameToColor = (string: string): Color => {
   const colorIndex = getColorIndex(string);
   const colorSpaceSize = nLetters * nLetters;
   const rowSize = colorSpaceSize / 7;
