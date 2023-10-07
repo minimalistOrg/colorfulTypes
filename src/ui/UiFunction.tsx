@@ -22,7 +22,7 @@ export const UiFunction = ({
         <p>)</p>
       </div>
 
-      <p>{'=>'}</p>
+      <p className={styles.uiFatArrow}>{'=>'}</p>
 
       <div className={styles.uiReturnType}>
         <UiType name={myFunction.returnType.type} />
