@@ -11,14 +11,21 @@ export interface MyReturnType {
   predefinedType: boolean;
 }
 
+export interface CodebasePosition {
+  start: Parser.Point;
+  end: Parser.Point;
+}
+
 export interface MyFunction {
   name: string;
   parameters: MyParameter[];
   returnType: MyReturnType;
+  codebasePosition: CodebasePosition;
 }
 
 export interface MyInterface {
   name: string;
+  codebasePosition: CodebasePosition;
 }
 
 export interface MyFile {
@@ -67,13 +74,21 @@ const buildFunction = (capture: QueryCapture): MyFunction => {
   return {
     name: capture.node.children[1]?.children[0]?.text,
     parameters: buildParameter(capture),
-    returnType: buildReturnType(capture)
+    returnType: buildReturnType(capture),
+    codebasePosition: {
+      start: capture.node.startPosition,
+      end: capture.node.endPosition,
+    },
   };
 };
 
 const buildInterface = (capture: QueryCapture): MyInterface => {
   return {
-    name: capture.node.children[1]?.text
+    name: capture.node.children[1]?.text,
+    codebasePosition: {
+      start: capture.node.startPosition,
+      end: capture.node.endPosition,
+    },
   };
 };
 
