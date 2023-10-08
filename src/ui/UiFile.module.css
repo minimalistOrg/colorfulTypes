@@ -1,0 +1,6 @@
+.uiFile {
+  padding: 1rem;
+  border: 1px solid var(--ui-file-border-color);
+  border-radius: var(--ui-file-border-radius);
+  display: inline-block;
+}

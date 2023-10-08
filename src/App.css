@@ -3,6 +3,9 @@
 
   --ui-text-color: #424242;
 
+  --ui-file-border-color: #80808080;
+  --ui-file-border-radius: 0.25rem;
+
   --ui-type-size: 1.5rem;
   --ui-type-border-radius: 0.25rem;
 }
