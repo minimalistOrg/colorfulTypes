@@ -21,9 +21,15 @@ export interface MyInterface {
   name: string;
 }
 
-export interface Codebase {
+export interface MyFile {
+  filename: string;
+  path: string[];
   myInterfaces: MyInterface[];
   myFunctions: MyFunction[];
+}
+
+export interface Codebase {
+  myFiles: MyFile[];
 }
 
 const buildParameter = (capture: QueryCapture): MyParameter[] => {
@@ -83,7 +89,16 @@ const buildCodebase = (captures: QueryCapture[]): Codebase => {
     }
   });
 
-  return { myFunctions, myInterfaces };
+  return {
+    myFiles: [
+      {
+        filename: 'index.tsx',
+        path: [],
+        myFunctions,
+        myInterfaces
+      }
+    ]
+  };
 }
 
 export const parse = async (code: string): Promise<Codebase> => {

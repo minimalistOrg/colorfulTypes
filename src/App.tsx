@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 import { Codebase, parse } from './utils/parser';
-import { UiFunctionList } from './ui/UiFunction';
-import { UiTypeGrid } from './ui/UiType';
+import { UiFile } from './ui/UiFile';
 
 // import { repoService } from './utils/repoService';
 
@@ -38,8 +37,14 @@ const func2 = (language: string, b: number): number => {};
 `;
 
 const emptyCodebase = {
-  myFunctions: [],
-  myInterfaces: [],
+  myFiles: [
+    {
+      filename: 'index.ts',
+      path: [],
+      myFunctions: [],
+      myInterfaces: [],
+    }
+  ]
 };
 
 export function App() {
@@ -58,9 +63,7 @@ export function App() {
     <>
       <h1>Colorful types</h1>
 
-      <UiTypeGrid myInterfaces={codebase.myInterfaces} />
-
-      <UiFunctionList myFunctions={codebase.myFunctions} />
+      <UiFile myFile={codebase.myFiles[0]} />
     </>
   )
 }
