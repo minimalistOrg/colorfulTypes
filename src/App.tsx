@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 import { Codebase, parse } from './utils/parser';
-import { UiFunction, UiFunctionList } from './ui/UiFunction';
-import { UiType, UiTypeGrid } from './ui/UiType';
+import { UiFunctionList } from './ui/UiFunction';
+import { UiTypeGrid } from './ui/UiType';
 
 // import { repoService } from './utils/repoService';
 
