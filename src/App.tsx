@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 import { Codebase, parse } from './utils/parser';
-import { UiFunction } from './ui/UiFunction';
+import { UiFunction, UiFunctionList } from './ui/UiFunction';
 import { UiType, UiTypeGrid } from './ui/UiType';
 
 // import { repoService } from './utils/repoService';
@@ -60,11 +60,7 @@ export function App() {
 
       <UiTypeGrid myInterfaces={codebase.myInterfaces} />
 
-      <div>
-        {codebase.myFunctions.map(myFunction => (
-          <UiFunction myFunction={myFunction} key={myFunction.name} />
-        ))}
-      </div>
+      <UiFunctionList myFunctions={codebase.myFunctions} />
     </>
   )
 }

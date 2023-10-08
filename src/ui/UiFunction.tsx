@@ -30,3 +30,17 @@ export const UiFunction = ({
     </div>
   )
 };
+
+export const UiFunctionList = ({
+  myFunctions,
+}: {
+  myFunctions: MyFunction[];
+}) => {
+  return (
+    <div className={styles.uiFunctionList}>
+      {myFunctions.map(myFunction => (
+        <UiFunction myFunction={myFunction} key={myFunction.name} />
+      ))}
+    </div>
+  )
+};
