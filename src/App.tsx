@@ -4,6 +4,7 @@ import './App.css';
 
 import { Codebase, parse } from './utils/parser';
 import { UiFunction } from './ui/UiFunction';
+import { UiType, UiTypeGrid } from './ui/UiType';
 
 // import { repoService } from './utils/repoService';
 
@@ -56,6 +57,8 @@ export function App() {
   return (
     <>
       <h1>Colorful types</h1>
+
+      <UiTypeGrid myInterfaces={codebase.myInterfaces} />
 
       <div>
         {codebase.myFunctions.map(myFunction => (

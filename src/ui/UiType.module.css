@@ -3,3 +3,10 @@
   height: var(--ui-type-size);
   border-radius: var(--ui-type-border-radius);
 }
+
+.uiTypeGrid {
+  display: inline-grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 1.5rem;
+}
