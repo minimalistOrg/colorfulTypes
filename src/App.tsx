@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import './App.css';
+import styles from './App.module.css';
 
 import { Codebase, parse } from './utils/parser';
 import { UiFile } from './ui/UiFile';
@@ -53,7 +54,9 @@ export function App() {
   useEffect(() => {
     const getCodebase = async () => {
       const codebase = await parse(exampleCode);
-      setCodebase(codebase);
+      setCodebase({
+        myFiles: [codebase.myFiles[0], codebase.myFiles[0], codebase.myFiles[0]],
+      });
     };
 
     getCodebase();
@@ -63,7 +66,11 @@ export function App() {
     <>
       <h1>Colorful types</h1>
 
-      <UiFile myFile={codebase.myFiles[0]} />
+      <div className={styles.uiCodebase}>
+        {codebase.myFiles.map(myFile => (
+          <UiFile myFile={myFile} key={myFile.filename} />
+        ))}
+      </div>
     </>
   )
 }

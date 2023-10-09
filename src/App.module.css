@@ -1,0 +1,5 @@
+.uiCodebase {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, 250px);
+}
