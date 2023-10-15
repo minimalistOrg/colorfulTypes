@@ -1,17 +1,22 @@
 import { TarReader } from '@gera2ld/tarjs';
-import Parser from 'web-tree-sitter';
+// import Parser from 'web-tree-sitter';
+
+export type RepoContent = Record<string, string>;
 
 const getRepositoryFiles = async (
   url: URL,
   extensions: string[],
-  callback: (source: string) => any,
-) => {
+  callback?: ((source: string) => any) | undefined,
+): Promise<RepoContent> => {
   const urlParts = url.pathname.split('/');
-  const ref = urlParts[4] || 'main'
+  const ref = urlParts[4];
 
   const archiveLink =
-    `https://codeload.github.com/${urlParts[1]}/${urlParts[2]}/legacy.tar.gz/refs/heads/${ref}`;
-  const response = await fetch(archiveLink)
+    `https://api.github.com/repos/${urlParts[1]}/${urlParts[2]}/tarball${ref ? `/${ref}` : ''}`
+  const response = await fetch(
+    archiveLink,
+    { redirect: 'follow' },
+  );
 
   const decompressedStream = response.body?.pipeThrough(new DecompressionStream("gzip"));
 
@@ -23,24 +28,33 @@ const getRepositoryFiles = async (
     extensions.some(extension => fileInfo.name.endsWith(extension))
   )
 
-  let tree : Parser.Tree | undefined;
-  sourceFileInfos.forEach((fileInfo) =>
-    tree = callback(reader.getTextFile(fileInfo.name))
-  )
+  // let tree : Parser.Tree | undefined;
+  // sourceFileInfos.forEach((fileInfo) =>
+  //   tree = callback(reader.getTextFile(fileInfo.name))
+  // )
 
-  // return sourceFileInfos.map(fileInfo => reader.getTextFile(fileInfo.name))
-  return tree;
+  const sourceFiles: Record<string, string> = {};
+
+  sourceFileInfos.reduce(
+    (acc, fileInfo) => {
+      acc[fileInfo.name] = reader.getTextFile(fileInfo.name);
+      return acc;
+    },
+    sourceFiles
+  );
+
+  return sourceFiles;
 };
 
 export const repoService = {
-  getProject: async (
+  getRepo: async (
     urlString: string,
     extensions: string[],
-    callback: (source: string) => any,
-  ) => {
+    callback?: ((source: string) => any) | undefined,
+  ): Promise<RepoContent> => {
     const url = new URL(urlString);
-    const tree = await getRepositoryFiles(url, extensions, callback);
+    const files = await getRepositoryFiles(url, extensions, callback);
 
-    return tree;
+    return files;
   }
 };

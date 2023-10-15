@@ -1,4 +1,5 @@
 import Parser, { QueryCapture } from "web-tree-sitter";
+import { RepoContent } from "./repoService";
 
 export interface MyParameter {
   name: string;
@@ -30,7 +31,7 @@ export interface MyInterface {
 
 export interface MyFile {
   filename: string;
-  path: string[];
+  // path: string[];
   myInterfaces: MyInterface[];
   myFunctions: MyFunction[];
 }
@@ -92,7 +93,7 @@ const buildInterface = (capture: QueryCapture): MyInterface => {
   };
 };
 
-const buildCodebase = (captures: QueryCapture[]): Codebase => {
+const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
   const myFunctions: MyFunction[] = [];
   const myInterfaces: MyInterface[] = [];
 
@@ -105,18 +106,14 @@ const buildCodebase = (captures: QueryCapture[]): Codebase => {
   });
 
   return {
-    myFiles: [
-      {
-        filename: 'index.tsx',
-        path: [],
-        myFunctions,
-        myInterfaces
-      }
-    ]
+    filename: filename,
+    // path: [],
+    myFunctions,
+    myInterfaces
   };
 }
 
-export const parse = async (code: string): Promise<Codebase> => {
+export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
   await Parser.init();
   const parser = new Parser();
 
@@ -129,8 +126,13 @@ export const parse = async (code: string): Promise<Codebase> => {
       (lexical_declaration (variable_declarator name:(identifier) value:(arrow_function))) @definition.function
     ]
   `;
-  const tree = parser.parse(code);
-  const query = Tsx.query(typesQuery);
 
-  return buildCodebase(query.captures(tree.rootNode));
+  const files = Object.entries(repoContent).map(([filename, fileContent]) => {
+    const tree = parser.parse(fileContent);
+    const query = Tsx.query(typesQuery);
+
+    return buildFile(query.captures(tree.rootNode), filename);
+  });
+
+  return { myFiles: files };
 };
