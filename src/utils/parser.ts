@@ -58,7 +58,7 @@ const buildParameter = (capture: QueryCapture): MyParameter[] => {
 const buildReturnType = (capture: QueryCapture): MyReturnType => {
   const returnValue = capture.node.children[1]?.children[2]?.children[1]?.children[1];
 
-  if (returnValue) {
+  if (returnValue && returnValue.children[0]) {
     return {
       type: returnValue.children[0]?.type,
       predefinedType: returnValue.type === 'predefined_type',
@@ -71,7 +71,7 @@ const buildReturnType = (capture: QueryCapture): MyReturnType => {
   }
 }
 
-const buildFunction = (capture: QueryCapture): MyFunction => {
+export const buildFunction = (capture: QueryCapture): MyFunction => {
   return {
     name: capture.node.children[1]?.children[0]?.text,
     parameters: buildParameter(capture),
@@ -83,7 +83,7 @@ const buildFunction = (capture: QueryCapture): MyFunction => {
   };
 };
 
-const buildInterface = (capture: QueryCapture): MyInterface => {
+export const buildInterface = (capture: QueryCapture): MyInterface => {
   return {
     name: capture.node.children[1]?.text,
     codebasePosition: {
