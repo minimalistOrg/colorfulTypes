@@ -1,12 +1,12 @@
 import { expect, test } from 'vitest'
 import { buildInterface } from '../parser'
-import { mockQueryCapture, mockSyntaxNode } from './mocks'
+import { emptySyntaxNode, mockQueryCapture, mockSyntaxNode } from './mocks'
 
 test('build interface', () => {
   const interfaceCapture = mockQueryCapture({
     name: 'definition.interface',
     children: [
-      mockSyntaxNode({ children: [] }),
+      emptySyntaxNode(),
       mockSyntaxNode({
         children: [mockSyntaxNode({ children: []})],
         text: 'MyInterface'

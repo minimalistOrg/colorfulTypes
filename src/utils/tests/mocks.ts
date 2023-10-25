@@ -1,10 +1,10 @@
 import { QueryCapture, SyntaxNode } from "web-tree-sitter";
 
 export const mockSyntaxNode = ({
-  children,
+  children = [],
   text = '',
 }: {
-  children: SyntaxNode[];
+  children?: SyntaxNode[];
   text?: string;
 }): SyntaxNode => {
   return {
@@ -13,6 +13,10 @@ export const mockSyntaxNode = ({
     children,
     text,
   } as unknown as SyntaxNode;
+};
+
+export const emptySyntaxNode = () => {
+  return mockSyntaxNode({});
 };
 
 export const mockQueryCapture = ({
@@ -26,4 +30,4 @@ export const mockQueryCapture = ({
     name,
     node: mockSyntaxNode({ children }),
   };
-}
+};
