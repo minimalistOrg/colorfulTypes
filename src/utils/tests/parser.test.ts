@@ -67,4 +67,92 @@ describe('build function', () => {
       }
     });
   });
+
+  it('builds an arrow function with params', () => {
+    const functionCapture = mockQueryCapture({
+      name: 'definition.function',
+      children: [
+        mockSyntaxNode({ text: 'const' }),
+        mockSyntaxNode({
+          text: 'arrowFunctionName = (a: string, b: number): void => {}',
+          children: [
+            mockSyntaxNode({ text: 'arrowFunctionName'}),
+            mockSyntaxNode({ text: '='}),
+            mockSyntaxNode({
+              text: '(a: string, b: number)',
+              children: [
+                mockSyntaxNode({
+                  text: '(a: string, b: number)',
+                  children: [
+                    mockSyntaxNode({ text: '(' }),
+                    mockSyntaxNode({
+                      text: 'a: string',
+                      children: [
+                        mockSyntaxNode({ text: 'a'}),
+                        mockSyntaxNode({
+                          text: ': string',
+                          children: [
+                            mockSyntaxNode({ text: ':'}),
+                            mockSyntaxNode({
+                              text: 'string',
+                              type: 'predefined_type',
+                            }),
+                          ]
+                        }),
+                      ]
+                    }),
+                    mockSyntaxNode({ text: '=' }),
+                    mockSyntaxNode({
+                      text: 'b: number',
+                      children: [
+                        mockSyntaxNode({ text: 'b'}),
+                        mockSyntaxNode({
+                          text: ': number',
+                          children: [
+                            mockSyntaxNode({ text: ':'}),
+                            mockSyntaxNode({
+                              text: 'number',
+                              type: 'predefined_type',
+                            }),
+                          ]
+                        }),
+                      ]
+                    }),
+                    mockSyntaxNode({ text: ')' }),
+                  ],
+                }),
+                mockSyntaxNode({ text: ': void' }),
+                mockSyntaxNode({ text: '=>' }),
+                mockSyntaxNode({ text: '{}' }),
+              ]
+            }),
+          ],
+        })
+      ]
+    });
+
+    expect(buildFunction(functionCapture)).toStrictEqual({
+      name: 'arrowFunctionName',
+      parameters: [
+        {
+          name: "a",
+          predefinedType: true,
+          type: "string",
+        },
+        {
+          name: "b",
+          predefinedType: true,
+          type: "number",
+        },
+      ],
+      returnType: {
+        type: 'void',
+        predefinedType: true,
+      },
+      codebasePosition: {
+        start: { row: 0, column: 0 },
+        end: { row: 0, column: 0 }
+      }
+    });
+  });
 });

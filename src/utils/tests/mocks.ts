@@ -3,14 +3,17 @@ import { QueryCapture, SyntaxNode } from "web-tree-sitter";
 export const mockSyntaxNode = ({
   children = [],
   text = '',
+  type = '',
 }: {
   children?: SyntaxNode[];
   text?: string;
+  type?: string;
 }): SyntaxNode => {
   return {
     startPosition: { row: 0, column: 0 },
     endPosition: { row: 0, column: 0 },
     children,
+    type,
     text,
   } as unknown as SyntaxNode;
 };
