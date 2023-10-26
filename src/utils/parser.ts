@@ -58,9 +58,9 @@ const buildParameter = (capture: QueryCapture): MyParameter[] => {
 const buildReturnType = (capture: QueryCapture): MyReturnType => {
   const returnValue = capture.node.children[1]?.children[2]?.children[1]?.children[1];
 
-  if (returnValue && returnValue.children[0]) {
+  if (returnValue) {
     return {
-      type: returnValue.children[0]?.type,
+      type: returnValue.text,
       predefinedType: returnValue.type === 'predefined_type',
     }
   }

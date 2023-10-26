@@ -68,6 +68,59 @@ describe('build function', () => {
     });
   });
 
+  it('builds an arrow function with return type', () => {
+    const functionCapture = mockQueryCapture({
+      name: 'definition.function',
+      children: [
+        mockSyntaxNode({ text: 'const' }),
+        mockSyntaxNode({
+          text: 'arrowFunctionName = (): string => {}',
+          children: [
+            mockSyntaxNode({ text: 'arrowFunctionName'}),
+            mockSyntaxNode({ text: '='}),
+            mockSyntaxNode({
+              text: '(): string => {}',
+              children: [
+                mockSyntaxNode({
+                  text: '()',
+                  children: [
+                    mockSyntaxNode({ text: '(' }),
+                    mockSyntaxNode({ text: ')' }),
+                  ],
+                }),
+                mockSyntaxNode({
+                  text: ': string',
+                  children: [
+                    mockSyntaxNode({ text: ':' }),
+                    mockSyntaxNode({
+                      text: 'string',
+                      type: 'predefined_type',
+                    }),
+                  ],
+                }),
+                mockSyntaxNode({ text: '=>' }),
+                mockSyntaxNode({ text: '{}' }),
+              ]
+            }),
+          ],
+        })
+      ]
+    });
+
+    expect(buildFunction(functionCapture)).toStrictEqual({
+      name: 'arrowFunctionName',
+      parameters: [],
+      returnType: {
+        type: 'string',
+        predefinedType: true,
+      },
+      codebasePosition: {
+        start: { row: 0, column: 0 },
+        end: { row: 0, column: 0 }
+      }
+    });
+  });
+
   it('builds an arrow function with params', () => {
     const functionCapture = mockQueryCapture({
       name: 'definition.function',
