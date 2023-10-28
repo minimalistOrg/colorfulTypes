@@ -1,10 +1,12 @@
 :root {
   /* color-scheme: light dark; */
 
+  --ui-background-color: rgb(247, 250, 252);
+  --ui-file-background-color: rgb(255, 255, 255);
+
   --ui-text-color: #424242;
 
-  --ui-file-border-color: #80808080;
-  --ui-file-border-radius: 0.25rem;
+  --ui-file-border-radius: 0.5rem;
 
   --ui-type-size: 1.5rem;
   --ui-type-border-radius: 0.25rem;
@@ -19,6 +21,7 @@ html {
 }
 
 body {
+  background-color: var(--ui-background-color);
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
