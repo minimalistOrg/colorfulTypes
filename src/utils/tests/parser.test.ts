@@ -28,36 +28,35 @@ describe('build function', () => {
   it('builds an arrow function with no params', () => {
     const functionCapture = mockQueryCapture({
       name: 'definition.function',
+      text: 'arrowFunctionName = (): void => {}',
+      type: 'variable_declarator',
       children: [
-        mockSyntaxNode({ text: 'const' }),
         mockSyntaxNode({
-          text: 'arrowFunctionName = (): void => {}',
-          type: 'variable_declarator',
+          text: 'arrowFunctionName',
+          type: 'identifier',
+        }),
+        mockSyntaxNode({ text: '='}),
+        mockSyntaxNode({
+          text: '(): void => {}',
+          type: 'arrow_function',
           children: [
-            mockSyntaxNode({ text: 'arrowFunctionName'}),
-            mockSyntaxNode({ text: '='}),
             mockSyntaxNode({
-              text: '(): void => {}',
+              text: '()',
+              type: 'formal_parameters',
               children: [
-                mockSyntaxNode({
-                  text: '()',
-                  type: 'formal_parameters',
-                  children: [
-                    mockSyntaxNode({ text: '(' }),
-                    mockSyntaxNode({ text: ')' }),
-                  ],
-                }),
-                mockSyntaxNode({
-                  text: ': void',
-                  type: 'type_annotation'
-                }),
-                mockSyntaxNode({ text: '=>' }),
-                mockSyntaxNode({ text: '{}' }),
-              ]
+                mockSyntaxNode({ text: '(' }),
+                mockSyntaxNode({ text: ')' }),
+              ],
             }),
-          ],
-        })
-      ]
+            mockSyntaxNode({
+              text: ': void',
+              type: 'type_annotation'
+            }),
+            mockSyntaxNode({ text: '=>' }),
+            mockSyntaxNode({ text: '{}' }),
+          ]
+        }),
+      ],
     });
 
     expect(buildArrowFunction(functionCapture)).toStrictEqual({
@@ -77,43 +76,42 @@ describe('build function', () => {
   it('builds an arrow function with return type', () => {
     const functionCapture = mockQueryCapture({
       name: 'definition.function',
+      text: 'arrowFunctionName = (): string => {}',
+      type: 'variable_declarator',
       children: [
-        mockSyntaxNode({ text: 'const' }),
         mockSyntaxNode({
-          text: 'arrowFunctionName = (): string => {}',
-          type: 'variable_declarator',
+          text: 'arrowFunctionName',
+          type: 'identifier',
+        }),
+        mockSyntaxNode({ text: '='}),
+        mockSyntaxNode({
+          text: '(): string => {}',
+          type: 'arrow_function',
           children: [
-            mockSyntaxNode({ text: 'arrowFunctionName'}),
-            mockSyntaxNode({ text: '='}),
             mockSyntaxNode({
-              text: '(): string => {}',
+              text: '()',
+              type: 'formal_parameters',
               children: [
-                mockSyntaxNode({
-                  text: '()',
-                  type: 'formal_parameters',
-                  children: [
-                    mockSyntaxNode({ text: '(' }),
-                    mockSyntaxNode({ text: ')' }),
-                  ],
-                }),
-                mockSyntaxNode({
-                  text: ': string',
-                  type: 'type_annotation',
-                  children: [
-                    mockSyntaxNode({ text: ':' }),
-                    mockSyntaxNode({
-                      text: 'string',
-                      type: 'predefined_type',
-                    }),
-                  ],
-                }),
-                mockSyntaxNode({ text: '=>' }),
-                mockSyntaxNode({ text: '{}' }),
-              ]
+                mockSyntaxNode({ text: '(' }),
+                mockSyntaxNode({ text: ')' }),
+              ],
             }),
-          ],
-        })
-      ]
+            mockSyntaxNode({
+              text: ': string',
+              type: 'type_annotation',
+              children: [
+                mockSyntaxNode({ text: ':' }),
+                mockSyntaxNode({
+                  text: 'string',
+                  type: 'predefined_type',
+                }),
+              ],
+            }),
+            mockSyntaxNode({ text: '=>' }),
+            mockSyntaxNode({ text: '{}' }),
+          ]
+        }),
+      ],
     });
 
     expect(buildArrowFunction(functionCapture)).toStrictEqual({
@@ -133,71 +131,70 @@ describe('build function', () => {
   it('builds an arrow function with params', () => {
     const functionCapture = mockQueryCapture({
       name: 'definition.function',
+      text: 'arrowFunctionName = (a: string, b: number): void => {}',
+      type: 'variable_declarator',
       children: [
-        mockSyntaxNode({ text: 'const' }),
         mockSyntaxNode({
-          text: 'arrowFunctionName = (a: string, b: number): void => {}',
-          type: 'variable_declarator',
+          text: 'arrowFunctionName',
+          type: 'identifier',
+        }),
+        mockSyntaxNode({ text: '='}),
+        mockSyntaxNode({
+          text: '(a: string, b: number)',
+          type: 'arrow_function',
           children: [
-            mockSyntaxNode({ text: 'arrowFunctionName'}),
-            mockSyntaxNode({ text: '='}),
             mockSyntaxNode({
               text: '(a: string, b: number)',
+              type: 'formal_parameters',
               children: [
+                mockSyntaxNode({ text: '(' }),
                 mockSyntaxNode({
-                  text: '(a: string, b: number)',
-                  type: 'formal_parameters',
+                  text: 'a: string',
+                  type: 'required_parameter',
                   children: [
-                    mockSyntaxNode({ text: '(' }),
+                    mockSyntaxNode({ text: 'a'}),
                     mockSyntaxNode({
-                      text: 'a: string',
-                      type: 'required_parameter',
+                      text: ': string',
                       children: [
-                        mockSyntaxNode({ text: 'a'}),
+                        mockSyntaxNode({ text: ':'}),
                         mockSyntaxNode({
-                          text: ': string',
-                          children: [
-                            mockSyntaxNode({ text: ':'}),
-                            mockSyntaxNode({
-                              text: 'string',
-                              type: 'predefined_type',
-                            }),
-                          ]
+                          text: 'string',
+                          type: 'predefined_type',
                         }),
                       ]
                     }),
-                    mockSyntaxNode({ text: ',' }),
-                    mockSyntaxNode({
-                      text: 'b: number',
-                      type: 'required_parameter',
-                      children: [
-                        mockSyntaxNode({ text: 'b'}),
-                        mockSyntaxNode({
-                          text: ': number',
-                          children: [
-                            mockSyntaxNode({ text: ':'}),
-                            mockSyntaxNode({
-                              text: 'number',
-                              type: 'predefined_type',
-                            }),
-                          ]
-                        }),
-                      ]
-                    }),
-                    mockSyntaxNode({ text: ')' }),
-                  ],
+                  ]
                 }),
+                mockSyntaxNode({ text: ',' }),
                 mockSyntaxNode({
-                  text: ': void',
-                  type: 'type_annotation'
+                  text: 'b: number',
+                  type: 'required_parameter',
+                  children: [
+                    mockSyntaxNode({ text: 'b'}),
+                    mockSyntaxNode({
+                      text: ': number',
+                      children: [
+                        mockSyntaxNode({ text: ':'}),
+                        mockSyntaxNode({
+                          text: 'number',
+                          type: 'predefined_type',
+                        }),
+                      ]
+                    }),
+                  ]
                 }),
-                mockSyntaxNode({ text: '=>' }),
-                mockSyntaxNode({ text: '{}' }),
-              ]
+                mockSyntaxNode({ text: ')' }),
+              ],
             }),
-          ],
-        })
-      ]
+            mockSyntaxNode({
+              text: ': void',
+              type: 'type_annotation'
+            }),
+            mockSyntaxNode({ text: '=>' }),
+            mockSyntaxNode({ text: '{}' }),
+          ]
+        }),
+      ],
     });
 
     expect(buildArrowFunction(functionCapture)).toStrictEqual({

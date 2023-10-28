@@ -25,12 +25,16 @@ export const emptySyntaxNode = () => {
 export const mockQueryCapture = ({
   name,
   children,
+  text,
+  type,
 }: {
   name: string;
   children: SyntaxNode[]
+  text?: string,
+  type?: string;
 }): QueryCapture => {
   return {
     name,
-    node: mockSyntaxNode({ children }),
+    node: mockSyntaxNode({ children, text, type }),
   };
 };

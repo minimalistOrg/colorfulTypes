@@ -69,18 +69,16 @@ const buildReturnType = (returnNode: SyntaxNode | undefined): MyReturnType => {
 export const buildArrowFunction = (capture: QueryCapture): MyFunction => {
   const functionParameters = capture.
     node.
-    children[1]?.
-    children[2]?.
+    children.find(node => node.type === 'arrow_function')?.
     children.find(node => node.type === 'formal_parameters')?.
     children || [];
   const returnNode = capture.
     node.
-    children[1]?.
-    children[2]?.
+    children.find(node => node.type === 'arrow_function')?.
     children.find(node => node.type === 'type_annotation');
 
   return {
-    name: capture.node.children.find(node => node.type === 'variable_declarator')?.children[0]?.text || 'ERROR',
+    name: capture.node.children.find(node => node.type === 'identifier')?.text || 'ERROR',
     parameters: buildParameters(functionParameters),
     returnType: buildReturnType(returnNode),
     codebasePosition: {
@@ -107,10 +105,8 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
   captures.forEach(capture => {
     if (capture.name === 'definition.interface') {
       myInterfaces.push(buildInterface(capture));
-    } else if (capture.name === 'definition.function') {
-      if (capture.node.children[1]?.children[2]?.type === 'arrow_function') {
-        myFunctions.push(buildArrowFunction(capture));
-      }
+    } else if (capture.name === 'definition.arrowFunction') {
+      myFunctions.push(buildArrowFunction(capture));
     }
   });
 
@@ -132,7 +128,7 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
   const typesQuery = `
     [
       (interface_declaration) @definition.interface
-      (lexical_declaration (variable_declarator name:(identifier) value:(arrow_function))) @definition.function
+      (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
     ]
   `;
 
