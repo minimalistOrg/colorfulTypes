@@ -9,6 +9,7 @@ test('build interface', () => {
       emptySyntaxNode(),
       mockSyntaxNode({
         text: 'MyInterface',
+        type: 'type_identifier',
         children: [],
       })
     ]
@@ -154,7 +155,7 @@ describe('build function', () => {
                         }),
                       ]
                     }),
-                    mockSyntaxNode({ text: '=' }),
+                    mockSyntaxNode({ text: ',' }),
                     mockSyntaxNode({
                       text: 'b: number',
                       children: [

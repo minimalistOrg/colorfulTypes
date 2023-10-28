@@ -85,7 +85,7 @@ export const buildFunction = (capture: QueryCapture): MyFunction => {
 
 export const buildInterface = (capture: QueryCapture): MyInterface => {
   return {
-    name: capture.node.children[1]?.text,
+    name: capture.node.children.find(node => node.type === 'type_identifier')?.text || 'ERROR',
     codebasePosition: {
       start: capture.node.startPosition,
       end: capture.node.endPosition,
