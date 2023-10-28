@@ -61,9 +61,14 @@ export function App() {
       <h1>Colorful types</h1>
 
       <div className={styles.uiCodebase}>
-        {codebase.myFiles.map(myFile => (
-          <UiFile myFile={myFile} key={myFile.filename} />
-        ))}
+        {codebase.
+          myFiles.
+          filter(myFile =>
+            myFile.myInterfaces.length > 0 || myFile.myFunctions.length > 0
+          ).
+          map(myFile => (
+            <UiFile myFile={myFile} key={myFile.filename} />
+          ))}
       </div>
     </>
   )
