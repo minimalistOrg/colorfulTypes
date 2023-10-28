@@ -1,4 +1,4 @@
-import Parser, { QueryCapture } from "web-tree-sitter";
+import Parser, { QueryCapture, SyntaxNode } from "web-tree-sitter";
 import { RepoContent } from "./repoService";
 
 export interface MyParameter {
@@ -40,42 +40,49 @@ export interface Codebase {
   myFiles: MyFile[];
 }
 
-const buildParameter = (capture: QueryCapture): MyParameter[] => {
-  const functionParameters = capture.node.children[1]?.children[2]?.children[0]?.children;
-  const myParameters = [];
-
-  for(let i=1; i < functionParameters.length - 1; i+=2) {
-    myParameters.push({
-      name: functionParameters[i]?.children[0]?.text,
-      type: functionParameters[i]?.children[1]?.children[1]?.text,
-      predefinedType: functionParameters[i]?.children[1]?.children[1]?.type === 'predefined_type'
-    });
-  }
-
-  return myParameters;
+const buildParameters = (functionParameters: SyntaxNode[]): MyParameter[] => {
+  return functionParameters.
+    filter(node => node.type === 'required_parameter').
+    map(node => (
+      {
+        name: node?.children[0]?.text,
+        type: node?.children[1]?.children[1]?.text,
+        predefinedType: node?.children[1]?.children[1]?.type === 'predefined_type'
+      }
+    ))
 };
 
-const buildReturnType = (capture: QueryCapture): MyReturnType => {
-  const returnValue = capture.node.children[1]?.children[2]?.children[1]?.children[1];
-
-  if (returnValue) {
+const buildReturnType = (returnNode: SyntaxNode | undefined): MyReturnType => {
+  if (returnNode && returnNode.children[1]) {
     return {
-      type: returnValue.text,
-      predefinedType: returnValue.type === 'predefined_type',
-    }
+      type: returnNode.children[1].text,
+      predefinedType: returnNode.children[1].type === 'predefined_type',
+    };
   }
 
   return {
     type: 'void',
     predefinedType: true,
-  }
+  };
 }
 
-export const buildFunction = (capture: QueryCapture): MyFunction => {
+export const buildArrowFunction = (capture: QueryCapture): MyFunction => {
+  const functionParameters = capture.
+    node.
+    children[1]?.
+    children[2]?.
+    children.find(node => node.type === 'formal_parameters')?.
+    children || [];
+  const returnNode = capture.
+    node.
+    children[1]?.
+    children[2]?.
+    children.find(node => node.type === 'type_annotation');
+
   return {
-    name: capture.node.children[1]?.children[0]?.text,
-    parameters: buildParameter(capture),
-    returnType: buildReturnType(capture),
+    name: capture.node.children.find(node => node.type === 'variable_declarator')?.children[0]?.text || 'ERROR',
+    parameters: buildParameters(functionParameters),
+    returnType: buildReturnType(returnNode),
     codebasePosition: {
       start: capture.node.startPosition,
       end: capture.node.endPosition,
@@ -101,7 +108,9 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
     if (capture.name === 'definition.interface') {
       myInterfaces.push(buildInterface(capture));
     } else if (capture.name === 'definition.function') {
-      myFunctions.push(buildFunction(capture));
+      if (capture.node.children[1]?.children[2]?.type === 'arrow_function') {
+        myFunctions.push(buildArrowFunction(capture));
+      }
     }
   });
 

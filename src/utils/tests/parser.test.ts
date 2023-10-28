@@ -1,5 +1,5 @@
 import { expect, test, describe, it } from 'vitest'
-import { buildFunction, buildInterface } from '../parser'
+import { buildArrowFunction, buildInterface } from '../parser'
 import { emptySyntaxNode, mockQueryCapture, mockSyntaxNode } from './mocks'
 
 test('build interface', () => {
@@ -32,6 +32,7 @@ describe('build function', () => {
         mockSyntaxNode({ text: 'const' }),
         mockSyntaxNode({
           text: 'arrowFunctionName = (): void => {}',
+          type: 'variable_declarator',
           children: [
             mockSyntaxNode({ text: 'arrowFunctionName'}),
             mockSyntaxNode({ text: '='}),
@@ -40,12 +41,16 @@ describe('build function', () => {
               children: [
                 mockSyntaxNode({
                   text: '()',
+                  type: 'formal_parameters',
                   children: [
                     mockSyntaxNode({ text: '(' }),
                     mockSyntaxNode({ text: ')' }),
                   ],
                 }),
-                mockSyntaxNode({ text: ': void' }),
+                mockSyntaxNode({
+                  text: ': void',
+                  type: 'type_annotation'
+                }),
                 mockSyntaxNode({ text: '=>' }),
                 mockSyntaxNode({ text: '{}' }),
               ]
@@ -55,7 +60,7 @@ describe('build function', () => {
       ]
     });
 
-    expect(buildFunction(functionCapture)).toStrictEqual({
+    expect(buildArrowFunction(functionCapture)).toStrictEqual({
       name: 'arrowFunctionName',
       parameters: [],
       returnType: {
@@ -76,6 +81,7 @@ describe('build function', () => {
         mockSyntaxNode({ text: 'const' }),
         mockSyntaxNode({
           text: 'arrowFunctionName = (): string => {}',
+          type: 'variable_declarator',
           children: [
             mockSyntaxNode({ text: 'arrowFunctionName'}),
             mockSyntaxNode({ text: '='}),
@@ -84,6 +90,7 @@ describe('build function', () => {
               children: [
                 mockSyntaxNode({
                   text: '()',
+                  type: 'formal_parameters',
                   children: [
                     mockSyntaxNode({ text: '(' }),
                     mockSyntaxNode({ text: ')' }),
@@ -91,6 +98,7 @@ describe('build function', () => {
                 }),
                 mockSyntaxNode({
                   text: ': string',
+                  type: 'type_annotation',
                   children: [
                     mockSyntaxNode({ text: ':' }),
                     mockSyntaxNode({
@@ -108,7 +116,7 @@ describe('build function', () => {
       ]
     });
 
-    expect(buildFunction(functionCapture)).toStrictEqual({
+    expect(buildArrowFunction(functionCapture)).toStrictEqual({
       name: 'arrowFunctionName',
       parameters: [],
       returnType: {
@@ -129,6 +137,7 @@ describe('build function', () => {
         mockSyntaxNode({ text: 'const' }),
         mockSyntaxNode({
           text: 'arrowFunctionName = (a: string, b: number): void => {}',
+          type: 'variable_declarator',
           children: [
             mockSyntaxNode({ text: 'arrowFunctionName'}),
             mockSyntaxNode({ text: '='}),
@@ -137,10 +146,12 @@ describe('build function', () => {
               children: [
                 mockSyntaxNode({
                   text: '(a: string, b: number)',
+                  type: 'formal_parameters',
                   children: [
                     mockSyntaxNode({ text: '(' }),
                     mockSyntaxNode({
                       text: 'a: string',
+                      type: 'required_parameter',
                       children: [
                         mockSyntaxNode({ text: 'a'}),
                         mockSyntaxNode({
@@ -158,6 +169,7 @@ describe('build function', () => {
                     mockSyntaxNode({ text: ',' }),
                     mockSyntaxNode({
                       text: 'b: number',
+                      type: 'required_parameter',
                       children: [
                         mockSyntaxNode({ text: 'b'}),
                         mockSyntaxNode({
@@ -175,7 +187,10 @@ describe('build function', () => {
                     mockSyntaxNode({ text: ')' }),
                   ],
                 }),
-                mockSyntaxNode({ text: ': void' }),
+                mockSyntaxNode({
+                  text: ': void',
+                  type: 'type_annotation'
+                }),
                 mockSyntaxNode({ text: '=>' }),
                 mockSyntaxNode({ text: '{}' }),
               ]
@@ -185,7 +200,7 @@ describe('build function', () => {
       ]
     });
 
-    expect(buildFunction(functionCapture)).toStrictEqual({
+    expect(buildArrowFunction(functionCapture)).toStrictEqual({
       name: 'arrowFunctionName',
       parameters: [
         {
