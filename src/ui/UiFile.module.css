@@ -2,5 +2,7 @@
   padding: 1rem;
   border: 1px solid var(--ui-file-border-color);
   border-radius: var(--ui-file-border-radius);
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }

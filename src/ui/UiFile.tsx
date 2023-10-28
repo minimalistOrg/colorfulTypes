@@ -1,8 +1,8 @@
-import styles from "./UiFile.module.css";
-
 import { MyFile } from "../utils/parser";
 import { UiFunctionList } from "./UiFunction";
 import { UiTypeGrid } from "./UiType";
+
+import styles from "./UiFile.module.css";
 
 export const UiFile = ({
   myFile,
@@ -11,8 +11,13 @@ export const UiFile = ({
 }) => {
   return (
     <div className={styles.uiFile}>
-      <UiTypeGrid myInterfaces={myFile.myInterfaces} />
-      <UiFunctionList myFunctions={myFile.myFunctions} />
+      { myFile.myInterfaces.length > 0 && (
+        <UiTypeGrid myInterfaces={myFile.myInterfaces} />
+      )}
+
+      { myFile.myFunctions.length > 0 && (
+        <UiFunctionList myFunctions={myFile.myFunctions} />
+      )}
     </div>
   )
 };
