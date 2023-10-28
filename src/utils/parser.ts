@@ -88,6 +88,24 @@ export const buildArrowFunction = (capture: QueryCapture): MyFunction => {
   };
 };
 
+export const buildFunction = (capture: QueryCapture): MyFunction => {
+  const functionParameters = capture.
+    node.
+    children.find(node => node.type === 'formal_parameters')?.
+    children || [];
+  const returnNode = capture.node.children.find(node => node.type === 'type_annotation');
+
+  return {
+    name: capture.node.children.find(node => node.type === 'identifier')?.text || 'ERROR',
+    parameters: buildParameters(functionParameters),
+    returnType: buildReturnType(returnNode),
+    codebasePosition: {
+      start: capture.node.startPosition,
+      end: capture.node.endPosition,
+    },
+  };
+};
+
 export const buildInterface = (capture: QueryCapture): MyInterface => {
   return {
     name: capture.node.children.find(node => node.type === 'type_identifier')?.text || 'ERROR',
@@ -107,6 +125,8 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
       myInterfaces.push(buildInterface(capture));
     } else if (capture.name === 'definition.arrowFunction') {
       myFunctions.push(buildArrowFunction(capture));
+    } else if (capture.name === 'definition.function') {
+      myFunctions.push(buildFunction(capture));
     }
   });
 
@@ -129,6 +149,7 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
     [
       (interface_declaration) @definition.interface
       (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
+      (function_declaration) @definition.function
     ]
   `;
 
