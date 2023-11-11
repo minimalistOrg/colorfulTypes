@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.26.2",
     "@gera2ld/tarjs": "^0.2.2",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
