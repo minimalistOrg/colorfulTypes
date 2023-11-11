@@ -3,6 +3,11 @@ import { TarReader } from '@gera2ld/tarjs';
 
 export type RepoContent = Record<string, string>;
 
+const getFilename = (fileName: string) => {
+  const indexOfFirstSlash = fileName.indexOf('/');
+  return fileName.slice(indexOfFirstSlash + 1);
+}
+
 const getRepositoryFiles = async (
   url: URL,
   extensions: string[],
@@ -37,7 +42,7 @@ const getRepositoryFiles = async (
 
   sourceFileInfos.reduce(
     (acc, fileInfo) => {
-      acc[fileInfo.name] = reader.getTextFile(fileInfo.name);
+      acc[getFilename(fileInfo.name)] = reader.getTextFile(fileInfo.name);
       return acc;
     },
     sourceFiles
