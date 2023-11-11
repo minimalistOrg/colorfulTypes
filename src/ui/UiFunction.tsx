@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 import { MyFunction } from "../utils/parser";
 import { UiType } from "./UiType";
 
@@ -8,12 +10,14 @@ export const UiFunction = ({
 }: {
   myFunction: MyFunction;
 }) => {
+  const columns = Math.ceil(Math.sqrt(myFunction.parameters.length))
+
   return (
     <div className={styles.uiFunction}>
       <div className={styles.uiParameterGroup}>
         <p>(</p>
 
-        <div className={styles.uiParameters}>
+        <div className={styles.uiParameters} style={ { '--columns': columns } as CSSProperties}>
           {myFunction.parameters.map(myParameter => (
             <UiType name={myParameter.type} key={myParameter.name} />
           ))}
