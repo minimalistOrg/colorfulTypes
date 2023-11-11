@@ -46,7 +46,7 @@ const buildParameters = (functionParameters: SyntaxNode[]): MyParameter[] => {
     map(node => (
       {
         name: node?.children[0]?.text,
-        type: node?.children[1]?.children[1]?.text,
+        type: node?.children[1]?.children[1]?.text || "any",
         predefinedType: node?.children[1]?.children[1]?.type === 'predefined_type'
       }
     ))
