@@ -65,20 +65,23 @@ import { repoService } from './utils/repoService';
 const emptyCodebase = { myFiles: [] };
 
 export function App() {
+  const [codebaseUrl] = useState(
+    // 'https://github.com/MinJieLiu/react-photo-view',
+    // 'https://github.com/microsoft/fluentui',
+    // 'https://github.com/novuhq/novu',
+    // 'https://github.com/illacloud/illa-builder',
+    // 'https://github.com/microsoft/TypeScript',
+    // 'https://github.com/minimalistOrg/colorfulTypes',
+    // 'https://github.com/minimalistOrg/minimalist-ide',
+    // 'https://github.com/minimalistOrg/minimalistIdeV2',
+    'https://github.com/tonybaloney/vscode-pets',
+  );
   const [codebase, setCodebase] = useState<Codebase>(emptyCodebase);
 
   useEffect(() => {
     const getCodebase = async () => {
       const repoContent = await repoService.getRepo(
-        // 'https://github.com/MinJieLiu/react-photo-view',
-        // 'https://github.com/microsoft/fluentui',
-        // 'https://github.com/novuhq/novu',
-        // 'https://github.com/illacloud/illa-builder',
-        // 'https://github.com/microsoft/TypeScript',
-        // 'https://github.com/minimalistOrg/colorfulTypes',
-        // 'https://github.com/minimalistOrg/minimalist-ide',
-        // 'https://github.com/minimalistOrg/minimalistIdeV2',
-        'https://github.com/tonybaloney/vscode-pets',
+        codebaseUrl,
         ['.tsx', '.ts'],
       );
 
@@ -96,6 +99,7 @@ export function App() {
   return (
     <>
       <h1>Colorful types</h1>
+      <h2>{codebaseUrl.replace(/^https?:\/\//, '')}</h2>
 
       <div className={styles.uiCodebase}>
         {codebase.
