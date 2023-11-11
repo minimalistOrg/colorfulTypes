@@ -8,34 +8,59 @@ import { UiFile } from './ui/UiFile';
 
 import { repoService } from './utils/repoService';
 
-const exampleCode = `
-export interface MyFunction {
-  name: string;
-  parameters: MyParameter[];
-  returnType?: MyReturnType;
-}
+// const exampleCode = `
+// export const ImageList: React.FC = ({ children }) => {
+//   return <div className="flex flex-wrap items-center my-6">{children}</div>;
+// };
+// `;
+// export interface ISliderPortalProps extends React.HTMLAttributes<HTMLDivElement> {
+//   container?: HTMLElement;
+// }
 
-export interface MyInterface {
-  name: string;
-}
+// function noParams(x: number, a: string): string {}
+// `;
 
-export interface Codebase {
-  myInterfaces: MyInterface[];
-  myFunctions: MyFunction[];
-}
+// const noParams = (x: string, b: number): string => {};
 
-const noParams = (): void => {};
+// const exampleCode = `
+// export const CodeBlock = (
+//   { name, blockParameters, ast }:
+//   { name: string, blockParameters: string, ast: string }
+// ) => {}
+// `;
 
-const getWasmFile = (language: Language): void => {
-  if (language === 'javascript') {
-    return '/assets/TreeSitter/tree-sitter-javascript.wasm'
-  } else if (language === 'typescript') {
-    return '/assets/TreeSitter/tree-sitter-tsx.wasm'
-  }
-};
+// const exampleCode = `
+// export const CodeBlock = (
+//   { name, blockParameters, ast }: TCodeBlock
+// ) => {}
+// `;
 
-const func2 = (language: string, b: number): number => {};
-`;
+// const exampleCode = `
+// export interface MyFunction {
+//   name: string;
+//   parameters: MyParameter[];
+//   returnType?: MyReturnType;
+// }
+
+// export interface MyInterface {
+//   name: string;
+// }
+
+// export interface Codebase {
+//   myInterfaces: MyInterface[];
+//   myFunctions: MyFunction[];
+// }
+
+// const getWasmFile = (language: Language): void => {
+//   if (language === 'javascript') {
+//     return '/assets/TreeSitter/tree-sitter-javascript.wasm'
+//   } else if (language === 'typescript') {
+//     return '/assets/TreeSitter/tree-sitter-tsx.wasm'
+//   }
+// };
+
+// const func2 = (language: string, b: number): void => {};
+// `;
 
 const emptyCodebase = { myFiles: [] };
 
@@ -45,9 +70,21 @@ export function App() {
   useEffect(() => {
     const getCodebase = async () => {
       const repoContent = await repoService.getRepo(
-        'https://github.com/minimalistOrg/minimalist-ide',
+        // 'https://github.com/MinJieLiu/react-photo-view',
+        // 'https://github.com/microsoft/fluentui',
+        // 'https://github.com/novuhq/novu',
+        // 'https://github.com/illacloud/illa-builder',
+        // 'https://github.com/microsoft/TypeScript',
+        // 'https://github.com/minimalistOrg/colorfulTypes',
+        // 'https://github.com/minimalistOrg/minimalist-ide',
+        // 'https://github.com/minimalistOrg/minimalistIdeV2',
+        'https://github.com/tonybaloney/vscode-pets',
         ['.tsx', '.ts'],
       );
+
+      // const repoContent = {
+      //   'index.ts': exampleCode
+      // };
 
       const codebase = await parse(repoContent);
       setCodebase(codebase);
