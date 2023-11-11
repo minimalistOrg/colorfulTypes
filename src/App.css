@@ -31,7 +31,6 @@ h1 {
   font-size: 2rem;
   font-weight: normal;
   line-height: 1.2;
-  line-height: 1.2;
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -49,9 +48,7 @@ p {
 }
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1rem;
+  margin: 1rem 2rem;
 }
 
 /* Utility classes */
