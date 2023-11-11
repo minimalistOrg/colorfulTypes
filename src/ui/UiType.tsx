@@ -1,5 +1,7 @@
 import { nameToColor } from "../utils/nameToColor";
 import { MyInterface } from "../utils/parser";
+import { Tooltip } from "./Tooltip";
+
 import styles from "./UiType.module.css";
 
 export const UiType = ({
@@ -10,11 +12,13 @@ export const UiType = ({
   const color = nameToColor(name);
 
   return (
-    <div
-      className={styles.uiType}
-      style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
-    />
-  )
+    <Tooltip text={name}>
+      <div
+        className={styles.uiType}
+        style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
+      />
+    </Tooltip>
+  );
 };
 
 export const UiTypeGrid = (
