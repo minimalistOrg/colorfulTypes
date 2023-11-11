@@ -1,5 +1,4 @@
 import { TarReader } from '@gera2ld/tarjs';
-// import Parser from 'web-tree-sitter';
 
 export type RepoContent = Record<string, string>;
 
@@ -11,7 +10,6 @@ const getFilename = (fileName: string) => {
 const getRepositoryFiles = async (
   url: URL,
   extensions: string[],
-  callback?: ((source: string) => any) | undefined,
 ): Promise<RepoContent> => {
   const urlParts = url.pathname.split('/');
   const ref = urlParts[4];
@@ -33,11 +31,6 @@ const getRepositoryFiles = async (
     extensions.some(extension => fileInfo.name.endsWith(extension))
   )
 
-  // let tree : Parser.Tree | undefined;
-  // sourceFileInfos.forEach((fileInfo) =>
-  //   tree = callback(reader.getTextFile(fileInfo.name))
-  // )
-
   const sourceFiles: Record<string, string> = {};
 
   sourceFileInfos.reduce(
@@ -55,10 +48,9 @@ export const repoService = {
   getRepo: async (
     urlString: string,
     extensions: string[],
-    callback?: ((source: string) => any) | undefined,
   ): Promise<RepoContent> => {
     const url = new URL(urlString);
-    const files = await getRepositoryFiles(url, extensions, callback);
+    const files = await getRepositoryFiles(url, extensions);
 
     return files;
   }
