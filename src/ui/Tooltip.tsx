@@ -9,7 +9,8 @@ import {
   arrow,
   autoUpdate,
   useTransitionStyles,
-  FloatingArrow
+  FloatingArrow,
+  Placement
 } from "@floating-ui/react";
 
 import styles from "./Tooltip.module.css";
@@ -17,9 +18,11 @@ import styles from "./Tooltip.module.css";
 const ARROW_HEIGHT = 15;
 
 export const Tooltip = ({
+  placement = 'bottom',
   text,
   children,
 }: {
+  placement?: Placement;
   text: string;
   children: ReactNode;
 }) => {
@@ -28,7 +31,7 @@ export const Tooltip = ({
   const arrowRef = useRef(null);
 
   const { refs, floatingStyles, context } = useFloating({
-    placement: 'bottom',
+    placement,
     open: isOpen,
     onOpenChange: setIsOpen,
     middleware: [
