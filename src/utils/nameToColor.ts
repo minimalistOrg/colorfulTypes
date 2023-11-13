@@ -1,20 +1,25 @@
 import { Color } from "../types";
-
-const aCharCode = 'a'.charCodeAt(0);
-const nLetters = 'z'.charCodeAt(0) - aCharCode + 1;
+import {
+  accumulatedAllLetterFrequency,
+  accumulatedFirstLetterFrequency,
+} from "./letterFrequencies";
 
 const getColorIndex = (string: string) => {
-  const lowerCaseString = string.toLowerCase();
+  const capitalLetters = string.slice(1).replace(/[^A-Z]+/g, '');
+  let colorIndex = accumulatedFirstLetterFrequency[string[0].toLowerCase()] || 0;
+  // let previousLetterFrequency = firstLetterFrequency[string[0]];
 
-  const firstLetterIndex = ((lowerCaseString.charCodeAt(0) - aCharCode) * nLetters) | 0;
-  const secondLetterIndex = (lowerCaseString.charCodeAt(1) - aCharCode) | 0;
+  for(let i = 0; i<4 && i<capitalLetters.length; i++) {
+    colorIndex += accumulatedAllLetterFrequency[capitalLetters[i].toLowerCase()] / Math.pow(10, i+1);
+    // previousLetterFrequency = allLetterFrequency[string[i]] / Math.pow(10, i+1);
+  }
 
-  return firstLetterIndex + secondLetterIndex;
+  return colorIndex;
 };
 
 export const nameToColor = (string: string): Color => {
-  const colorIndex = getColorIndex(string);
-  const colorSpaceSize = nLetters * nLetters;
+  const colorSpaceSize = 560;
+  const colorIndex = getColorIndex(string) * colorSpaceSize;
   const rowSize = colorSpaceSize / 7;
 
   return {
