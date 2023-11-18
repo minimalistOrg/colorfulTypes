@@ -1,5 +1,5 @@
 import { expect, test, describe, it } from 'vitest'
-import { buildArrowFunction, buildFunction, buildInterface } from '../parser'
+import { buildArrowFunction, buildEnum, buildFunction, buildInterface } from '../parser'
 import { emptySyntaxNode, mockQueryCapture, mockSyntaxNode } from './mocks'
 
 test('build interface', () => {
@@ -17,6 +17,39 @@ test('build interface', () => {
 
   expect(buildInterface(interfaceCapture)).toStrictEqual({
     name: 'MyInterface',
+    codebasePosition: {
+      start: { row: 0, column: 0 },
+      end: { row: 0, column: 0 }
+    }
+  });
+});
+
+test('build enum', () => {
+  const interfaceCapture = mockQueryCapture({
+    name: 'definition.interface',
+    children: [
+      mockSyntaxNode({
+        text: 'const',
+        type: 'const',
+      }),
+      mockSyntaxNode({
+        text: 'enum',
+        type: 'enum',
+      }),
+      mockSyntaxNode({
+        text: 'MyEnum',
+        type: 'identifier',
+        children: [],
+      }),
+      mockSyntaxNode({
+        text: '{ }',
+        type: 'enum_body',
+      }),
+    ]
+  });
+
+  expect(buildEnum(interfaceCapture)).toStrictEqual({
+    name: 'MyEnum',
     codebasePosition: {
       start: { row: 0, column: 0 },
       end: { row: 0, column: 0 }

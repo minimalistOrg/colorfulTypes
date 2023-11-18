@@ -1,5 +1,5 @@
 import { nameToColor } from "../utils/nameToColor";
-import { MyInterface } from "../utils/parser";
+import { MyType } from "../utils/parser";
 import { Tooltip } from "./Tooltip";
 
 import styles from "./UiType.module.css";
@@ -46,12 +46,12 @@ export const UiType = ({
 };
 
 export const UiTypeGrid = (
-  { myInterfaces } : { myInterfaces: MyInterface[] }
+  { myTypes } : { myTypes: MyType[] }
 ) => {
   return (
     <div className={styles.uiTypeGrid}>
-      {myInterfaces.map(myInterface => (
-        <UiType name={myInterface.name} key={myInterface.name} />
+      {myTypes.map(myType => (
+        <UiType name={myType.name} key={myType.name} />
       ))}
     </div>
   )

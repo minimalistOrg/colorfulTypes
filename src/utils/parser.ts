@@ -24,7 +24,7 @@ export interface MyFunction {
   codebasePosition: CodebasePosition;
 }
 
-export interface MyInterface {
+export interface MyType {
   name: string;
   codebasePosition: CodebasePosition;
 }
@@ -32,7 +32,7 @@ export interface MyInterface {
 export interface MyFile {
   filename: string;
   // path: string[];
-  myInterfaces: MyInterface[];
+  myTypes: MyType[];
   myFunctions: MyFunction[];
 }
 
@@ -106,7 +106,7 @@ export const buildFunction = (capture: QueryCapture): MyFunction => {
   };
 };
 
-export const buildInterface = (capture: QueryCapture): MyInterface => {
+export const buildInterface = (capture: QueryCapture): MyType => {
   return {
     name: capture.node.children.find(node => node.type === 'type_identifier')?.text || 'ERROR',
     codebasePosition: {
@@ -116,13 +116,25 @@ export const buildInterface = (capture: QueryCapture): MyInterface => {
   };
 };
 
+export const buildEnum = (capture: QueryCapture): MyType => {
+  return {
+    name: capture.node.children.find(node => node.type === 'identifier')?.text || 'ERROR',
+    codebasePosition: {
+      start: capture.node.startPosition,
+      end: capture.node.endPosition,
+    },
+  };
+};
+
 const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
   const myFunctions: MyFunction[] = [];
-  const myInterfaces: MyInterface[] = [];
+  const myTypes: MyType[] = [];
 
   captures.forEach(capture => {
     if (capture.name === 'definition.interface') {
-      myInterfaces.push(buildInterface(capture));
+      myTypes.push(buildInterface(capture));
+    } else if (capture.name === 'definition.enum') {
+      myTypes.push(buildEnum(capture));
     } else if (capture.name === 'definition.arrowFunction') {
       myFunctions.push(buildArrowFunction(capture));
     } else if (capture.name === 'definition.function') {
@@ -134,7 +146,7 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
     filename: filename,
     // path: [],
     myFunctions,
-    myInterfaces
+    myTypes
   };
 }
 
@@ -150,6 +162,7 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
       (interface_declaration) @definition.interface
       (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
       (function_declaration) @definition.function
+      (enum_declaration) @definition.enum
     ]
   `;
 

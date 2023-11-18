@@ -105,7 +105,7 @@ export function App() {
         {codebase.
           myFiles.
           filter(myFile =>
-            myFile.myInterfaces.length > 0 || myFile.myFunctions.length > 0
+            myFile.myTypes.length > 0 || myFile.myFunctions.length > 0
           ).
           map(myFile => (
             <UiFile myFile={myFile} key={myFile.filename} />

@@ -13,8 +13,8 @@ export const UiFile = ({
   return (
     <Tooltip text={myFile.filename} placement="top">
       <div className={styles.uiFile}>
-        { myFile.myInterfaces.length > 0 && (
-          <UiTypeGrid myInterfaces={myFile.myInterfaces} />
+        { myFile.myTypes.length > 0 && (
+          <UiTypeGrid myTypes={myFile.myTypes} />
         )}
 
         { myFile.myFunctions.length > 0 && (
