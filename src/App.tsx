@@ -71,9 +71,9 @@ export function App() {
     // 'https://github.com/novuhq/novu',
     // 'https://github.com/illacloud/illa-builder',
     // 'https://github.com/microsoft/TypeScript',
-    // 'https://github.com/minimalistOrg/colorfulTypes',
     // 'https://github.com/minimalistOrg/minimalist-ide',
     // 'https://github.com/minimalistOrg/minimalistIdeV2',
+    // 'https://github.com/minimalistOrg/colorfulTypes',
     'https://github.com/tonybaloney/vscode-pets',
   );
   const [codebase, setCodebase] = useState<Codebase>(emptyCodebase);

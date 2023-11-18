@@ -15,21 +15,25 @@ export const UiFunction = ({
   return (
     <div className={styles.uiFunction}>
       <div className={styles.uiParameterGroup}>
-        <p>(</p>
+        <p className={styles.uiSymbol}>(</p>
 
         <div className={styles.uiParameters} style={ { '--columns': columns } as CSSProperties}>
           {myFunction.parameters.map(myParameter => (
-            <UiType name={myParameter.type} key={myParameter.name} />
+            <UiType
+              name={myParameter.type}
+              predefinedType={myParameter.predefinedType}
+              key={myParameter.name}
+            />
           ))}
         </div>
 
-        <p>)</p>
+        <p className={styles.uiSymbol}>)</p>
       </div>
 
-      <p className={styles.uiFatArrow}>{'=>'}</p>
+      <p className={styles.uiSymbol}>{'=>'}</p>
 
       <div className={styles.uiReturnType}>
-        <UiType name={myFunction.returnType.type} />
+        <UiType name={myFunction.returnType.type} predefinedType={myFunction.returnType.predefinedType} />
       </div>
     </div>
   )

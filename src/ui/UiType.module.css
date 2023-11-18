@@ -4,6 +4,11 @@
   border-radius: var(--ui-type-border-radius);
 }
 
+.uiPredefinedType {
+  cursor: default;
+  font-size: var(--ui-type-size);
+}
+
 .uiTypeGrid {
   display: inline-grid;
   gap: 0.5rem;

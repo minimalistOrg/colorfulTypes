@@ -4,11 +4,35 @@ import { Tooltip } from "./Tooltip";
 
 import styles from "./UiType.module.css";
 
+const emojis: Record<string, string> = {
+  any: '*️⃣',
+  void: '🚫',
+  null: '⛔',
+  undefined: '⛔',
+  number: '#️⃣',
+  boolean: '🔘',
+  string: '📝', // '📖',
+  unknown: '🔮', // '🛸' or '👽'
+  // exception => 🚩 or 🤬
+};
+
 export const UiType = ({
   name,
+  predefinedType,
 }: {
-  name: string,
+  name: string;
+  predefinedType?: boolean;
 }) => {
+  if (predefinedType) {
+    return (
+      <Tooltip text={name}>
+        <p className={styles.uiPredefinedType}>
+          {emojis[name]}
+        </p>
+      </Tooltip>
+    );
+  }
+
   const color = nameToColor(name);
 
   return (
