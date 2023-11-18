@@ -131,7 +131,7 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
   const myTypes: MyType[] = [];
 
   captures.forEach(capture => {
-    if (capture.name === 'definition.interface') {
+    if (capture.name === 'definition.interface' || capture.name === 'definition.typeAlias') {
       myTypes.push(buildInterface(capture));
     } else if (capture.name === 'definition.enum') {
       myTypes.push(buildEnum(capture));
@@ -159,10 +159,11 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
 
   const typesQuery = `
     [
-      (interface_declaration) @definition.interface
-      (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
-      (function_declaration) @definition.function
       (enum_declaration) @definition.enum
+      (function_declaration) @definition.function
+      (interface_declaration) @definition.interface
+      (type_alias_declaration) @definition.typeAlias
+      (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
     ]
   `;
 

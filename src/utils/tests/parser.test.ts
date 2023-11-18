@@ -24,9 +24,41 @@ test('build interface', () => {
   });
 });
 
+test('build type', () => {
+  const typeAliasCapture = mockQueryCapture({
+    name: 'definition.typeAlias',
+    children: [
+      mockSyntaxNode({
+        text: 'type',
+        type: 'type',
+      }),
+      mockSyntaxNode({
+        text: 'MyTypeAlias',
+        type: 'type_identifier',
+      }),
+      mockSyntaxNode({
+        text: '=',
+        type: '=',
+      }),
+      mockSyntaxNode({
+        text: 'number',
+        type: 'predefined_type',
+      }),
+    ]
+  });
+
+  expect(buildInterface(typeAliasCapture)).toStrictEqual({
+    name: 'MyInterface',
+    codebasePosition: {
+      start: { row: 0, column: 0 },
+      end: { row: 0, column: 0 }
+    }
+  });
+});
+
 test('build enum', () => {
-  const interfaceCapture = mockQueryCapture({
-    name: 'definition.interface',
+  const enumCapture = mockQueryCapture({
+    name: 'definition.enum',
     children: [
       mockSyntaxNode({
         text: 'const',
@@ -48,7 +80,7 @@ test('build enum', () => {
     ]
   });
 
-  expect(buildEnum(interfaceCapture)).toStrictEqual({
+  expect(buildEnum(enumCapture)).toStrictEqual({
     name: 'MyEnum',
     codebasePosition: {
       start: { row: 0, column: 0 },
