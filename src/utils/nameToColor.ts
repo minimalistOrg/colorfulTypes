@@ -18,12 +18,14 @@ const getColorIndex = (string: string) => {
 };
 
 export const nameToColor = (string: string): Color => {
-  const colorSpaceSize = 560;
+  const columns = 80;
+  const rows = 7;
+  const colorSpaceSize = columns * rows;
   const colorIndex = getColorIndex(string) * colorSpaceSize;
-  const rowSize = colorSpaceSize / 7;
+  const rowSize = colorSpaceSize / rows;
 
   return {
     l: (colorIndex / rowSize * 10) + 30,
-    hue: colorIndex % rowSize
+    hue: (colorIndex % rowSize) * (360 / columns)
   }
 };
