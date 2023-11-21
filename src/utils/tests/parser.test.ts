@@ -24,6 +24,28 @@ test('build interface', () => {
   });
 });
 
+test('build class', () => {
+  const classCapture = mockQueryCapture({
+    name: 'definition.class',
+    children: [
+      emptySyntaxNode(),
+      mockSyntaxNode({
+        text: 'MyClass',
+        type: 'type_identifier',
+        children: [],
+      })
+    ]
+  });
+
+  expect(buildInterface(classCapture)).toStrictEqual({
+    name: 'MyClass',
+    codebasePosition: {
+      start: { row: 0, column: 0 },
+      end: { row: 0, column: 0 }
+    }
+  });
+});
+
 test('build type', () => {
   const typeAliasCapture = mockQueryCapture({
     name: 'definition.typeAlias',
@@ -48,7 +70,7 @@ test('build type', () => {
   });
 
   expect(buildInterface(typeAliasCapture)).toStrictEqual({
-    name: 'MyInterface',
+    name: 'MyTypeAlias',
     codebasePosition: {
       start: { row: 0, column: 0 },
       end: { row: 0, column: 0 }

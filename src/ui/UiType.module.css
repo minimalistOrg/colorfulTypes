@@ -7,7 +7,7 @@
 .uiPredefinedType {
   cursor: default;
   font-size: var(--ui-type-size);
-  opacity: 0.7;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .uiTypeGrid {
