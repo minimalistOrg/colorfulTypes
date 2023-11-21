@@ -62,7 +62,7 @@ import { repoService } from './utils/repoService';
 // const func2 = (language: string, b: number): void => {};
 // `;
 
-const emptyCodebase = { myFiles: [] };
+const emptyCodebase = { myFiles: {} };
 
 export function App() {
   const [codebaseUrl] = useState(
@@ -102,14 +102,15 @@ export function App() {
       <h2>{codebaseUrl.replace(/^https?:\/\//, '')}</h2>
 
       <div className={styles.uiCodebase}>
-        {codebase.
-          myFiles.
-          filter(myFile =>
-            myFile.myTypes.length > 0 || myFile.myFunctions.length > 0
-          ).
-          map(myFile => (
-            <UiFile myFile={myFile} key={myFile.filename} />
-          ))}
+        {
+          Object.entries(codebase.myFiles).map(([filename, myFile]) => {
+            if(myFile.myTypes.length > 0 || myFile.myFunctions.length > 0) {
+              return <UiFile myFile={myFile} key={filename} />
+            } else {
+              return null;
+            }
+          })
+        }
       </div>
     </>
   )

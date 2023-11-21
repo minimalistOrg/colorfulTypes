@@ -37,7 +37,7 @@ export interface MyFile {
 }
 
 export interface Codebase {
-  myFiles: MyFile[];
+  myFiles: Record<string, MyFile>;
 }
 
 const buildParameters = (functionParameters: SyntaxNode[]): MyParameter[] => {
@@ -173,12 +173,16 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
     ]
   `;
 
-  const files = Object.entries(repoContent).map(([filename, fileContent]) => {
-    const tree = parser.parse(fileContent);
-    const query = Tsx.query(typesQuery);
+  const myFiles = Object.entries(repoContent).reduce(
+    (allFiles, repoEntry) => {
+      const tree = parser.parse(repoEntry[1]);
+      const query = Tsx.query(typesQuery);
 
-    return buildFile(query.captures(tree.rootNode), filename);
-  });
+      allFiles[repoEntry[0]] = buildFile(query.captures(tree.rootNode), repoEntry[0]);
+      return allFiles;
+    },
+    {} as Record<string, MyFile>
+  );
 
-  return { myFiles: files };
+  return { myFiles };
 };
