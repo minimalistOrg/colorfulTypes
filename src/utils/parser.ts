@@ -169,6 +169,7 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
       (type_alias_declaration) @definition.typeAlias
       (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
       (class_declaration) @definition.class
+      (abstract_class_declaration) @definition.class
     ]
   `;
 
