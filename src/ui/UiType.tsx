@@ -1,3 +1,4 @@
+import { ZoomLevel } from "../types";
 import { nameToColor } from "../utils/nameToColor";
 import { MyType } from "../utils/parser";
 import { Tooltip } from "./Tooltip";
@@ -19,9 +20,11 @@ const emojis: Record<string, string> = {
 export const UiType = ({
   name,
   predefinedType,
+  zoomLevel = 1,
 }: {
   name: string;
   predefinedType?: boolean;
+  zoomLevel?: ZoomLevel;
 }) => {
   if (predefinedType) {
     return (
@@ -35,14 +38,26 @@ export const UiType = ({
 
   const color = nameToColor(name);
 
-  return (
-    <Tooltip text={name}>
-      <div
-        className={styles.uiType}
-        style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
-      />
-    </Tooltip>
-  );
+  if (zoomLevel === 1) {
+    return (
+      <Tooltip text={name}>
+        <div
+          className={styles.uiType}
+          style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
+        />
+      </Tooltip>
+    );
+  } else if (zoomLevel === 2) {
+    return (
+      <div className="flex flex-vcenter">
+        <div
+          className={styles.uiType}
+          style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
+        />
+        <h5>{name}</h5>
+      </div>
+    );
+  }
 };
 
 export const UiTypeGrid = (

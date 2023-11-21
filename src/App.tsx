@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import styles from './App.module.css';
 
-import { Codebase, parse } from './utils/parser';
+import { Codebase, MyFile, parse } from './utils/parser';
 import { UiFile } from './ui/UiFile';
 
 import { repoService } from './utils/repoService';
@@ -77,6 +77,7 @@ export function App() {
     'https://github.com/tonybaloney/vscode-pets',
   );
   const [codebase, setCodebase] = useState<Codebase>(emptyCodebase);
+  const [selectedFile, setSelectedFile] = useState<MyFile | undefined>();
 
   useEffect(() => {
     const getCodebase = async () => {
@@ -101,16 +102,30 @@ export function App() {
       <h1>Colorful types</h1>
       <h2>{codebaseUrl.replace(/^https?:\/\//, '')}</h2>
 
-      <div className={styles.uiCodebase}>
-        {
-          Object.entries(codebase.myFiles).map(([filename, myFile]) => {
-            if(myFile.myTypes.length > 0 || myFile.myFunctions.length > 0) {
-              return <UiFile myFile={myFile} key={filename} />
-            } else {
-              return null;
-            }
-          })
-        }
+      <div className="flex">
+        <div className={styles.uiCodebase}>
+          {
+            Object.entries(codebase.myFiles).map(([filename, myFile]) => {
+              if(myFile.myTypes.length > 0 || myFile.myFunctions.length > 0) {
+                return (
+                  <UiFile
+                    myFile={myFile}
+                    key={filename}
+                    setSelectedFile={setSelectedFile}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })
+          }
+        </div>
+
+        <div className={styles.uiSelectedFile}>
+          {selectedFile && (
+            <UiFile myFile={selectedFile} zoomLevel={2} />
+          )}
+        </div>
       </div>
     </>
   )
