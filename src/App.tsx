@@ -111,6 +111,7 @@ export function App() {
                   <UiFile
                     myFile={myFile}
                     key={filename}
+                    isSelected={myFile === selectedFile}
                     setSelectedFile={setSelectedFile}
                   />
                 );
@@ -123,7 +124,7 @@ export function App() {
 
         <div className={styles.uiSelectedFile}>
           {selectedFile && (
-            <UiFile myFile={selectedFile} zoomLevel={2} />
+            <UiFile myFile={selectedFile} isSelected={false} zoomLevel={2} />
           )}
         </div>
       </div>
