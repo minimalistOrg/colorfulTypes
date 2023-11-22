@@ -27,13 +27,24 @@ export const UiType = ({
   zoomLevel?: ZoomLevel;
 }) => {
   if (predefinedType) {
-    return (
-      <Tooltip text={name}>
-        <p className={styles.uiPredefinedType}>
-          {emojis[name]}
-        </p>
-      </Tooltip>
-    );
+    if (zoomLevel === 1) {
+      return (
+        <Tooltip text={name}>
+          <p className={styles.uiPredefinedType}>
+            {emojis[name]}
+          </p>
+        </Tooltip>
+      );
+    } else if (zoomLevel === 2) {
+      return (
+        <div className="flex flex-vcenter">
+          <p className={styles.uiPredefinedType}>
+            {emojis[name]}
+          </p>
+          <p>{name}</p>
+        </div>
+      );
+    }
   }
 
   const color = nameToColor(name);
@@ -54,7 +65,7 @@ export const UiType = ({
           className={styles.uiType}
           style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
         />
-        <h5>{name}</h5>
+        <p>{name}</p>
       </div>
     );
   }

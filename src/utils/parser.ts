@@ -150,7 +150,7 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
     filename: filename,
     // path: [],
     myFunctions,
-    myTypes
+    myTypes: myTypes.sort((a, b) => a.name < b.name ? -1 : 1)
   };
 }
 

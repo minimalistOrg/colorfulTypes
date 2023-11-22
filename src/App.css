@@ -62,9 +62,13 @@ p {
 /* Utility classes */
 .flex {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .flex-vcenter {
   align-items: center;
+}
+
+.flex-gap1 {
+  gap: 0.25rem;
 }

@@ -1,13 +1,21 @@
 .uiFunction {
+  gap: 0.25rem;
+}
+
+.uiFunctionLevel1, .uiFunctionSameLineLevel2 {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
 }
 
 .uiParameterGroup {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.uiParameterGroupLevel2 {
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .uiParameters {
