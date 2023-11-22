@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.uiFileLevel2 {
+  gap: 2rem;
+}
+
 .uiFileSelected {
   border-color: rgb(2 132 199);
 }

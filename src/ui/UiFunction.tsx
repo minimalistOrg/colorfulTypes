@@ -34,12 +34,16 @@ export const UiFunction = ({
           style={ { '--columns': columns } as CSSProperties}
         >
           {myFunction.parameters.map(myParameter => (
-            <UiType
-              name={myParameter.type}
-              predefinedType={myParameter.predefinedType}
-              key={myParameter.name}
-              zoomLevel={zoomLevel}
-            />
+            <div className="flex flex-vcenter">
+              {zoomLevel === 2 && <p>{`${myParameter.name}:`}</p>}
+
+              <UiType
+                name={myParameter.type}
+                predefinedType={myParameter.predefinedType}
+                key={myParameter.name}
+                zoomLevel={zoomLevel}
+              />
+            </div>
           ))}
         </div>
 

@@ -1,7 +1,7 @@
 .uiCodebase {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, 296px);
+  grid-template-columns: repeat(auto-fill, 300px);
   flex-grow: 1;
 }
 

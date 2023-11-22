@@ -48,6 +48,14 @@ h3, h4, h5 {
   margin: 0;
 }
 
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
 p {
   font-size: 1.5rem;
   font-weight: 200;
@@ -71,4 +79,8 @@ p {
 
 .flex-gap1 {
   gap: 0.25rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
 }

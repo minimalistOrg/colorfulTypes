@@ -45,22 +45,22 @@ export const UiFile = ({
     );
   } else if (zoomLevel === 2) {
     return (
-      <div className={styles.uiFile}>
+      <div className={classnames(styles.uiFile, styles.uiFileLevel2)}>
         <h3>{myFile.filename}</h3>
 
         { myFile.myTypes.length > 0 && (
-          <>
-            <h4>Types</h4>
+          <div>
+            <h4 className="mb-1">Types</h4>
 
             <div className={styles.uiFileWrapperLevel2}>
               { myFile.myTypes.map(myType => <UiType name={myType.name} zoomLevel={zoomLevel} />) }
             </div>
-          </>
+          </div>
         )}
 
         { myFile.myFunctions.length > 0 && (
-          <>
-            <h4>Functions</h4>
+          <div>
+            <h4 className="mb-1">Functions</h4>
 
             <div className={styles.uiFileWrapperLevel2}>
               {
@@ -69,7 +69,7 @@ export const UiFile = ({
                 )
               }
             </div>
-          </>
+          </div>
         )}
       </div>
     );
