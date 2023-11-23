@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import classnames from "classnames";
 
 import { MyFile } from "../utils/parser";
@@ -19,7 +19,7 @@ export const UiFile = ({
   isSelected: boolean;
   setSelectedFile?: Dispatch<SetStateAction<MyFile | undefined>>;
   zoomLevel?: ZoomLevel;
-}) => {
+}): ReactNode => {
   if (zoomLevel === 1) {
     return (
       <Tooltip text={myFile.filename} placement="top">

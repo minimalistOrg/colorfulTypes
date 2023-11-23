@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import './App.css';
 import styles from './App.module.css';
@@ -64,7 +64,7 @@ import { repoService } from './utils/repoService';
 
 const emptyCodebase = { myFiles: {} };
 
-export function App() {
+export function App(): ReactNode {
   const [codebaseUrl] = useState(
     // 'https://github.com/MinJieLiu/react-photo-view',
     // 'https://github.com/microsoft/fluentui',
@@ -73,14 +73,14 @@ export function App() {
     // 'https://github.com/microsoft/TypeScript',
     // 'https://github.com/minimalistOrg/minimalist-ide',
     // 'https://github.com/minimalistOrg/minimalistIdeV2',
-    // 'https://github.com/minimalistOrg/colorfulTypes',
-    'https://github.com/tonybaloney/vscode-pets',
+    'https://github.com/minimalistOrg/colorfulTypes',
+    // 'https://github.com/tonybaloney/vscode-pets',
   );
   const [codebase, setCodebase] = useState<Codebase>(emptyCodebase);
   const [selectedFile, setSelectedFile] = useState<MyFile | undefined>();
 
   useEffect(() => {
-    const getCodebase = async () => {
+    const getCodebase = async (): Promise<void> => {
       const repoContent = await repoService.getRepo(
         codebaseUrl,
         ['.tsx', '.ts'],

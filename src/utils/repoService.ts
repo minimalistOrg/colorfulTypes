@@ -2,7 +2,7 @@ import { TarReader } from '@gera2ld/tarjs';
 
 export type RepoContent = Record<string, string>;
 
-const getFilename = (fileName: string) => {
+const getFilename = (fileName: string): string => {
   const indexOfFirstSlash = fileName.indexOf('/');
   return fileName.slice(indexOfFirstSlash + 1);
 }

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { ZoomLevel } from "../types";
 import { nameToColor } from "../utils/nameToColor";
 import { MyType } from "../utils/parser";
@@ -25,7 +26,7 @@ export const UiType = ({
   name: string;
   predefinedType?: boolean;
   zoomLevel?: ZoomLevel;
-}) => {
+}): ReactNode => {
   if (predefinedType) {
     if (zoomLevel === 1) {
       return (
@@ -73,7 +74,7 @@ export const UiType = ({
 
 export const UiTypeGrid = (
   { myTypes } : { myTypes: MyType[] }
-) => {
+): ReactNode => {
   return (
     <div className={styles.uiTypeGrid}>
       {myTypes.map(myType => (

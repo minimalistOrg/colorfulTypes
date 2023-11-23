@@ -25,7 +25,7 @@ export const Tooltip = ({
   placement?: Placement;
   text: string;
   children: ReactNode;
-}) => {
+}): ReactNode => {
   const [isOpen, setIsOpen] = useState(false);
 
   const arrowRef = useRef(null);

@@ -18,7 +18,7 @@ export const mockSyntaxNode = ({
   } as unknown as SyntaxNode;
 };
 
-export const emptySyntaxNode = () => {
+export const emptySyntaxNode = (): SyntaxNode => {
   return mockSyntaxNode({});
 };
 

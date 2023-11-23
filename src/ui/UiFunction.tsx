@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 import classnames from "classnames";
 
 import { MyFunction } from "../utils/parser";
@@ -13,7 +13,7 @@ export const UiFunction = ({
 }: {
   myFunction: MyFunction;
   zoomLevel?: ZoomLevel
-}) => {
+}): ReactNode => {
   const columns = zoomLevel === 1 ? Math.ceil(Math.sqrt(myFunction.parameters.length)) : 1;
   const zeroParameters = myFunction.parameters.length === 0;
 
@@ -94,7 +94,7 @@ export const UiFunctionList = ({
   myFunctions,
 }: {
   myFunctions: MyFunction[];
-}) => {
+}): ReactNode => {
   return (
     <div className={styles.uiFunctionList}>
       {myFunctions.map(myFunction => (

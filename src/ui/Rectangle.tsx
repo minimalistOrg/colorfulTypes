@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Color, Position } from "../types";
 
 export const Rectangle = ({
@@ -6,7 +7,7 @@ export const Rectangle = ({
 }: {
   position: Position,
   color: Color,
-}) => {
+}): ReactNode => {
   return (
     <rect
       x={position.x}

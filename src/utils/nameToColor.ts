@@ -4,7 +4,7 @@ import {
   accumulatedFirstLetterFrequency,
 } from "./letterFrequencies";
 
-const getColorIndex = (string: string) => {
+const getColorIndex = (string: string): number => {
   const capitalLetters = string.slice(1).replace(/[^A-Z]+/g, '');
   let colorIndex = accumulatedFirstLetterFrequency[string[0].toLowerCase()] || 0;
   // let previousLetterFrequency = firstLetterFrequency[string[0]];
