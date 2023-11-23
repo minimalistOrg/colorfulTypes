@@ -102,7 +102,7 @@ export function App(): ReactNode {
       <h1>Colorful types</h1>
       <h2>{codebaseUrl.replace(/^https?:\/\//, '')}</h2>
 
-      <div className="flex">
+      <div className={styles.uiLayout}>
         <div className={styles.uiCodebase}>
           {
             Object.entries(codebase.myFiles).map(([filename, myFile]) => {

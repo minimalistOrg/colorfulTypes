@@ -5,6 +5,13 @@
   flex-grow: 1;
 }
 
+.uiLayout {
+  display: flex;
+  align-items: flex-start;
+}
+
 .uiSelectedFile {
+  position: sticky;
+  top: 1rem;
   width: 592px;
 }
