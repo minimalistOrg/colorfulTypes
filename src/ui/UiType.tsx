@@ -19,10 +19,12 @@ const emojis: Record<string, string> = {
 };
 
 export const UiType = ({
+  kind,
   name,
   predefinedType,
   zoomLevel = 1,
 }: {
+  kind?: string;
   name: string;
   predefinedType?: boolean;
   zoomLevel?: ZoomLevel;
@@ -66,7 +68,8 @@ export const UiType = ({
           className={styles.uiType}
           style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
         />
-        <p>{name}</p>
+        <p>{kind}</p>
+        <p className={styles.uiTypeNameLevel2}>{name}</p>
       </div>
     );
   }
@@ -78,7 +81,7 @@ export const UiTypeGrid = (
   return (
     <div className={styles.uiTypeGrid}>
       {myTypes.map(myType => (
-        <UiType name={myType.name} key={myType.name} />
+        <UiType kind={myType.kind} name={myType.name} key={myType.name} />
       ))}
     </div>
   )

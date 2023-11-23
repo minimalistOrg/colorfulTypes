@@ -16,6 +16,7 @@ test('build interface', () => {
   });
 
   expect(buildInterface(interfaceCapture)).toStrictEqual({
+    kind: 'interface',
     name: 'MyInterface',
     codebasePosition: {
       start: { row: 0, column: 0 },
@@ -38,6 +39,7 @@ test('build class', () => {
   });
 
   expect(buildInterface(classCapture)).toStrictEqual({
+    kind: 'class',
     name: 'MyClass',
     codebasePosition: {
       start: { row: 0, column: 0 },
@@ -48,7 +50,7 @@ test('build class', () => {
 
 test('build type', () => {
   const typeAliasCapture = mockQueryCapture({
-    name: 'definition.typeAlias',
+    name: 'definition.type',
     children: [
       mockSyntaxNode({
         text: 'type',
@@ -70,6 +72,7 @@ test('build type', () => {
   });
 
   expect(buildInterface(typeAliasCapture)).toStrictEqual({
+    kind: 'type',
     name: 'MyTypeAlias',
     codebasePosition: {
       start: { row: 0, column: 0 },
@@ -103,6 +106,7 @@ test('build enum', () => {
   });
 
   expect(buildEnum(enumCapture)).toStrictEqual({
+    kind: 'enum',
     name: 'MyEnum',
     codebasePosition: {
       start: { row: 0, column: 0 },

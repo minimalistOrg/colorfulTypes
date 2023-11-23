@@ -10,6 +10,10 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
+.uiTypeNameLevel2 {
+  font-weight: normal;
+}
+
 .uiTypeGrid {
   display: inline-grid;
   gap: 0.5rem;

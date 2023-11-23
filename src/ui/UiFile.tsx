@@ -53,7 +53,13 @@ export const UiFile = ({
             <h4 className="mb-1">Types</h4>
 
             <div className={styles.uiFileWrapperLevel2}>
-              { myFile.myTypes.map(myType => <UiType name={myType.name} zoomLevel={zoomLevel} />) }
+              {myFile.myTypes.map(myType =>
+                <UiType
+                  name={myType.name}
+                  zoomLevel={zoomLevel}
+                  kind={myType.kind}
+                />
+              )}
             </div>
           </div>
         )}

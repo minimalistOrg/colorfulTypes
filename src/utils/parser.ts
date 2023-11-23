@@ -25,13 +25,13 @@ export interface MyFunction {
 }
 
 export interface MyType {
+  kind: 'type' | 'enum' | 'interface' | 'class';
   name: string;
   codebasePosition: CodebasePosition;
 }
 
 export interface MyFile {
   filename: string;
-  // path: string[];
   myTypes: MyType[];
   myFunctions: MyFunction[];
 }
@@ -108,6 +108,7 @@ export const buildFunction = (capture: QueryCapture): MyFunction => {
 
 export const buildInterface = (capture: QueryCapture): MyType => {
   return {
+    kind: capture.name.split('.')[1] as MyType['kind'],
     name: capture.node.children.find(node => node.type === 'type_identifier')?.text || 'ERROR',
     codebasePosition: {
       start: capture.node.startPosition,
@@ -118,6 +119,7 @@ export const buildInterface = (capture: QueryCapture): MyType => {
 
 export const buildEnum = (capture: QueryCapture): MyType => {
   return {
+    kind: 'enum',
     name: capture.node.children.find(node => node.type === 'identifier')?.text || 'ERROR',
     codebasePosition: {
       start: capture.node.startPosition,
@@ -133,7 +135,7 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
   captures.forEach(capture => {
     if (
       capture.name === 'definition.interface' ||
-      capture.name === 'definition.typeAlias' ||
+      capture.name === 'definition.type' ||
       capture.name === 'definition.class'
     ) {
       myTypes.push(buildInterface(capture));
@@ -166,7 +168,7 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
       (enum_declaration) @definition.enum
       (function_declaration) @definition.function
       (interface_declaration) @definition.interface
-      (type_alias_declaration) @definition.typeAlias
+      (type_alias_declaration) @definition.type
       (variable_declarator name:(identifier) value:(arrow_function)) @definition.arrowFunction
       (class_declaration) @definition.class
       (abstract_class_declaration) @definition.class
