@@ -12,13 +12,16 @@ const getRepositoryFiles = async (
   extensions: string[],
 ): Promise<RepoContent> => {
   const urlParts = url.pathname.split('/');
-  const ref = urlParts[4];
 
-  const archiveLink =
-    `https://api.github.com/repos/${urlParts[1]}/${urlParts[2]}/tarball${ref ? `/${ref}` : ''}`
+  const archiveLink = `https://minimalist-api.vercel.app/${urlParts[1]}/${urlParts[2]}`;
   const response = await fetch(
     archiveLink,
-    { redirect: 'follow' },
+    {
+      headers: {
+        'Origin': "https://colorful-types.netlify.app",
+      },
+      redirect: 'follow'
+    },
   );
 
   const decompressedStream = response.body?.pipeThrough(new DecompressionStream("gzip"));
