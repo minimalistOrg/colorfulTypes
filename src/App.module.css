@@ -8,10 +8,13 @@
 .uiLayout {
   display: flex;
   align-items: flex-start;
+  gap: 1rem;
 }
 
 .uiSelectedFile {
   position: sticky;
   top: 1rem;
   width: 592px;
+  overflow-y: auto;
+  max-height: calc(100vh - 2rem);
 }
