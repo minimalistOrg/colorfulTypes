@@ -65,24 +65,26 @@ import { repoService } from './utils/repoService';
 const emptyCodebase = { myFiles: {} };
 
 export function App(): ReactNode {
-  const [codebaseUrl] = useState(
-    // 'https://github.com/MinJieLiu/react-photo-view',
-    // 'https://github.com/microsoft/fluentui',
-    // 'https://github.com/novuhq/novu',
-    // 'https://github.com/illacloud/illa-builder',
-    // 'https://github.com/microsoft/TypeScript',
-    // 'https://github.com/minimalistOrg/minimalist-ide',
-    // 'https://github.com/minimalistOrg/minimalistIdeV2',
-    'https://github.com/minimalistOrg/colorfulTypes',
-    // 'https://github.com/tonybaloney/vscode-pets',
-  );
+  const githubRepo = {
+    org: 'minimalistOrg',
+    repo: 'colorfulTypes',
+  }
+  // 'https://github.com/MinJieLiu/react-photo-view',
+  // 'https://github.com/microsoft/fluentui',
+  // 'https://github.com/novuhq/novu',
+  // 'https://github.com/illacloud/illa-builder',
+  // 'https://github.com/microsoft/TypeScript',
+  // 'https://github.com/minimalistOrg/minimalist-ide',
+  // 'https://github.com/minimalistOrg/minimalistIdeV2',
+  // 'https://github.com/tonybaloney/vscode-pets',
+
   const [codebase, setCodebase] = useState<Codebase>(emptyCodebase);
   const [selectedFile, setSelectedFile] = useState<MyFile | undefined>();
 
   useEffect(() => {
     const getCodebase = async (): Promise<void> => {
       const repoContent = await repoService.getRepo(
-        codebaseUrl,
+        githubRepo,
         ['.tsx', '.ts'],
       );
 
@@ -100,7 +102,7 @@ export function App(): ReactNode {
   return (
     <>
       <h1>Colorful types</h1>
-      <h2>{codebaseUrl.replace(/^https?:\/\//, '')}</h2>
+      <h2>{githubRepo.org}/{githubRepo.repo}</h2>
 
       <div className={styles.uiLayout}>
         <div className={styles.uiCodebase}>

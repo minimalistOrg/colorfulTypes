@@ -2,18 +2,21 @@ import { TarReader } from '@gera2ld/tarjs';
 
 export type RepoContent = Record<string, string>;
 
+export interface GithubRepo {
+  org: string;
+  repo: string;
+}
+
 const getFilename = (fileName: string): string => {
   const indexOfFirstSlash = fileName.indexOf('/');
   return fileName.slice(indexOfFirstSlash + 1);
 }
 
 const getRepositoryFiles = async (
-  url: URL,
+  githubRepo: GithubRepo,
   extensions: string[],
 ): Promise<RepoContent> => {
-  const urlParts = url.pathname.split('/');
-
-  const archiveLink = `https://minimalist-api.vercel.app/${urlParts[1]}/${urlParts[2]}`;
+  const archiveLink = `https://minimalist-api.vercel.app/${githubRepo.org}/${githubRepo.repo}`;
   const response = await fetch(
     archiveLink,
     {
@@ -49,12 +52,9 @@ const getRepositoryFiles = async (
 
 export const repoService = {
   getRepo: async (
-    urlString: string,
+    githubRepo: GithubRepo,
     extensions: string[],
   ): Promise<RepoContent> => {
-    const url = new URL(urlString);
-    const files = await getRepositoryFiles(url, extensions);
-
-    return files;
+    return getRepositoryFiles(githubRepo, extensions);
   }
 };
