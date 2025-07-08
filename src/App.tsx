@@ -83,16 +83,12 @@ export function App(): ReactNode {
 
   useEffect(() => {
     const getCodebase = async (): Promise<void> => {
-      const repoContent = await repoService.getRepo(
-        githubRepo,
+      const repoContent = await repoService.getRepo(githubRepo);
+
+      const codebase = await parse(
+        repoContent,
         ['.tsx', '.ts'],
       );
-
-      // const repoContent = {
-      //   'index.ts': exampleCode
-      // };
-
-      const codebase = await parse(repoContent);
       setCodebase(codebase);
     };
 

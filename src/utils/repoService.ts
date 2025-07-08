@@ -12,10 +12,7 @@ const getFilename = (fileName: string): string => {
   return fileName.slice(indexOfFirstSlash + 1);
 }
 
-const getRepositoryFiles = async (
-  githubRepo: GithubRepo,
-  extensions: string[],
-): Promise<RepoContent> => {
+const getRepositoryFiles = async (githubRepo: GithubRepo): Promise<RepoContent> => {
   const archiveLink = `https://minimalist-api.vercel.app/${githubRepo.org}/${githubRepo.repo}`;
   const response = await fetch(
     archiveLink,
@@ -33,13 +30,9 @@ const getRepositoryFiles = async (
   const reader = new TarReader();
   const fileInfos = await reader.readFile(blob);
 
-  const sourceFileInfos = fileInfos.filter(fileInfo =>
-    extensions.some(extension => fileInfo.name.endsWith(extension))
-  )
-
   const sourceFiles: Record<string, string> = {};
 
-  sourceFileInfos.reduce(
+  fileInfos.reduce(
     (acc, fileInfo) => {
       acc[getFilename(fileInfo.name)] = reader.getTextFile(fileInfo.name);
       return acc;
@@ -51,10 +44,7 @@ const getRepositoryFiles = async (
 };
 
 export const repoService = {
-  getRepo: async (
-    githubRepo: GithubRepo,
-    extensions: string[],
-  ): Promise<RepoContent> => {
-    return getRepositoryFiles(githubRepo, extensions);
+  getRepo: async (githubRepo: GithubRepo): Promise<RepoContent> => {
+    return getRepositoryFiles(githubRepo);
   }
 };

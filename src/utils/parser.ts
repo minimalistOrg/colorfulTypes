@@ -156,7 +156,10 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
   };
 }
 
-export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
+export const parse = async (
+  repoContent: RepoContent,
+  extensions: string[],
+): Promise<Codebase> => {
   await Parser.init();
   const parser = new Parser();
 
@@ -175,12 +178,14 @@ export const parse = async (repoContent: RepoContent): Promise<Codebase> => {
     ]
   `;
 
-  const myFiles = Object.entries(repoContent).reduce(
-    (allFiles, repoEntry) => {
+  const myFiles = Object.entries(repoContent).reduce((allFiles, repoEntry) => {
       const tree = parser.parse(repoEntry[1]);
       const query = Tsx.query(typesQuery);
 
-      allFiles[repoEntry[0]] = buildFile(query.captures(tree.rootNode), repoEntry[0]);
+      if (extensions.some(extension => repoEntry[0].endsWith(extension))) {
+        allFiles[repoEntry[0]] = buildFile(query.captures(tree.rootNode), repoEntry[0]);
+      }
+
       return allFiles;
     },
     {} as Record<string, MyFile>
