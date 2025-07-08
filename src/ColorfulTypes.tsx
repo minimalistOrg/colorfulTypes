@@ -64,7 +64,7 @@ import { repoService } from './utils/repoService';
 
 const emptyCodebase = { myFiles: {} };
 
-export function App(): ReactNode {
+export function ColorfulTypes(): ReactNode {
   const githubRepo = {
     org: 'minimalistOrg',
     repo: 'colorfulTypes',
