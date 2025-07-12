@@ -7,9 +7,9 @@ import { UiType, UiTypeGrid } from "./UiType";
 import { Tooltip } from "./Tooltip";
 import { ZoomLevel } from "../types";
 
-import styles from "./UiFile.module.css";
+import styles from "./UiFileContent.module.css";
 
-export const UiFile = ({
+export const UiFileContent = ({
   myFile,
   isSelected,
   setSelectedFile,

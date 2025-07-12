@@ -4,7 +4,7 @@ import './App.css';
 import styles from './App.module.css';
 
 import { Codebase, MyFile, parse } from './utils/parser';
-import { UiFile } from './ui/UiFile';
+import { UiFileContent } from './ui/UiFileContent';
 
 import { repoService } from './utils/repoService';
 
@@ -106,7 +106,7 @@ export function ColorfulTypes(): ReactNode {
             Object.entries(codebase.myFiles).map(([filename, myFile]) => {
               if(myFile.myTypes.length > 0 || myFile.myFunctions.length > 0) {
                 return (
-                  <UiFile
+                  <UiFileContent
                     myFile={myFile}
                     key={filename}
                     isSelected={myFile === selectedFile}
@@ -122,7 +122,7 @@ export function ColorfulTypes(): ReactNode {
 
         <div className={styles.uiSelectedFile}>
           {selectedFile && (
-            <UiFile myFile={selectedFile} isSelected={false} zoomLevel={2} />
+            <UiFileContent myFile={selectedFile} isSelected={false} zoomLevel={2} />
           )}
         </div>
       </div>
