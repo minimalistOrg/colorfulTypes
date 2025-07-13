@@ -1,5 +1,5 @@
 import Parser, { QueryCapture, SyntaxNode } from "web-tree-sitter";
-import { RepoContent } from "./repoService";
+import { FileInfo } from "./repoService";
 
 export interface MyParameter {
   name: string;
@@ -157,7 +157,7 @@ const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
 }
 
 export const parse = async (
-  repoContent: RepoContent,
+  repoContent: FileInfo[],
   extensions: string[],
 ): Promise<Codebase> => {
   await Parser.init();
@@ -178,12 +178,18 @@ export const parse = async (
     ]
   `;
 
-  const myFiles = Object.entries(repoContent).reduce((allFiles, repoEntry) => {
-      const tree = parser.parse(repoEntry[1]);
-      const query = Tsx.query(typesQuery);
+  const myFiles = repoContent.reduce(
+    (allFiles, repoEntry) => {
+      if(repoEntry.content) {
+        const tree = parser.parse(repoEntry.content);
+        const query = Tsx.query(typesQuery);
 
-      if (extensions.some(extension => repoEntry[0].endsWith(extension))) {
-        allFiles[repoEntry[0]] = buildFile(query.captures(tree.rootNode), repoEntry[0]);
+        if (extensions.some(extension => repoEntry.name.endsWith(extension))) {
+          allFiles[repoEntry.name] = buildFile(
+            query.captures(tree.rootNode),
+            repoEntry.name
+          );
+        }
       }
 
       return allFiles;

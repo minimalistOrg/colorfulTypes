@@ -1,18 +1,20 @@
-import { TarReader } from '@gera2ld/tarjs';
+import { ITarFileInfo, TarReader } from '@gera2ld/tarjs';
 
-export type RepoContent = Record<string, string | null>;
+export interface FileInfo extends ITarFileInfo {
+  content: string | undefined;
+}
 
 export interface GithubRepo {
   org: string;
   repo: string;
 }
 
-interface RepositoryFile {
+export interface RepositoryFile {
   kind: 'file';
   name: string;
-  extension: string;
+  extension: string | undefined;
   size: number;
-  content: string | null;
+  content: string | undefined;
 }
 
 export interface RepositoryFolder {
@@ -29,7 +31,7 @@ const getFilename = (fileName: string): string => {
   return fileName.slice(indexOfFirstSlash + 1);
 }
 
-const getRepositoryFiles = async (githubRepo: GithubRepo): Promise<RepoContent> => {
+const getRepositoryFiles = async (githubRepo: GithubRepo): Promise<FileInfo[]> => {
   const archiveLink = `https://minimalist-api.vercel.app/${githubRepo.org}/${githubRepo.repo}`;
   const response = await fetch(
     archiveLink,
@@ -45,28 +47,29 @@ const getRepositoryFiles = async (githubRepo: GithubRepo): Promise<RepoContent> 
 
   const blob = await new Response(decompressedStream).blob()
   const reader = new TarReader();
-  const fileInfos = await reader.readFile(blob);
+  const tarFileInfos = await reader.readFile(blob);
 
-  const files = fileInfos.reduce(
-    (acc, fileInfo) => {
-      if (fileInfo.size < 1_000_000) {
-        acc[getFilename(fileInfo.name)] = reader.getTextFile(fileInfo.name);
-      } else {
-        acc[getFilename(fileInfo.name)] = null
+  const fileInfos = tarFileInfos.map(fileInfo => {
+    if (fileInfo.size < 1_000_000) {
+      return {
+        ...fileInfo,
+        name: getFilename(fileInfo.name),
+        content: reader.getTextFile(fileInfo.name),
       }
+    } else {
+      return {
+        ...fileInfo,
+        name: getFilename(fileInfo.name),
+        content: undefined,
+      }
+    }
+  });
 
-      return acc;
-    },
-    {} as RepoContent
-  );
-
-  return files;
+  return fileInfos;
 };
 
 export const repoService = {
-  getRepo: async (githubRepo: GithubRepo): Promise<RepoContent> => {
-    return getRepositoryFiles(githubRepo);
-  },
+  getRepo: getRepositoryFiles,
   getTree: async (githubRepo: GithubRepo): Promise<RepositoryFolder> => {
     const repositoryFiles = await getRepositoryFiles(githubRepo);
     const repository: RepositoryFolder = {
@@ -77,27 +80,28 @@ export const repoService = {
     };
     let current: RepositoryItem;
 
-    for (const path in repositoryFiles) {
+    for (const fileInfo of repositoryFiles) {
       // ignore pax_global_header file that contains info about the gzip
-      if (path === 'pax_global_header') {
+      const fileName = fileInfo.name;
+      if (fileName === 'pax_global_header') {
         continue;
       }
 
       current = repository;
 
-      for (const segment of path.split('/')) {
+      for (const segment of fileName.split('/')) {
         if (segment !== '') {
           if (current && current.kind === 'folder') {
             let childItem: RepositoryItem | undefined = current.folders.find(i => i.name === segment);
 
             if (!childItem) {
-              if (path.endsWith(segment) && !path.endsWith('/')) {
+              if (fileName.endsWith(segment) && !fileName.endsWith('/')) {
                 childItem = {
                   kind: 'file',
                   name: segment,
-                  content: repositoryFiles[path],
-                  size: 0,
-                  extension: segment.split('.')[-1]
+                  content: fileInfo.content,
+                  size: fileInfo.size,
+                  extension: segment.split('.').at(-1)
                 }
 
                 current.files.push(childItem);
