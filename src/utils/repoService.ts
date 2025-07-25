@@ -26,6 +26,7 @@ export interface RepositoryFolder {
 
 export interface RepositoryRoot extends RepositoryFolder {
   size: number;
+  totalFiles: number;
 }
 
 type RepositoryItem = RepositoryFile | RepositoryFolder;
@@ -82,9 +83,11 @@ export const repoService = {
       files: [],
       folders: [],
       size: 0,
+      totalFiles: 0,
     };
     let current: RepositoryItem;
     let repoSize = 0;
+    let totalFiles = 0;
 
     for (const fileInfo of repositoryFiles) {
       // ignore pax_global_header file that contains info about the gzip
@@ -111,6 +114,7 @@ export const repoService = {
                 }
 
                 repoSize += fileInfo.size;
+                totalFiles += 1;
                 current.files.push(childItem);
               } else {
                 childItem = {
@@ -131,6 +135,7 @@ export const repoService = {
     }
 
     repository.size = repoSize;
+    repository.totalFiles = totalFiles;
     return repository;
   }
 };
