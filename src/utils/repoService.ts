@@ -24,6 +24,10 @@ export interface RepositoryFolder {
   folders: RepositoryFolder[];
 }
 
+export interface RepositoryRoot extends RepositoryFolder {
+  size: number;
+}
+
 type RepositoryItem = RepositoryFile | RepositoryFolder;
 
 const getFilename = (fileName: string): string => {
@@ -70,15 +74,17 @@ const getRepositoryFiles = async (githubRepo: GithubRepo): Promise<FileInfo[]> =
 
 export const repoService = {
   getRepo: getRepositoryFiles,
-  getTree: async (githubRepo: GithubRepo): Promise<RepositoryFolder> => {
+  getTree: async (githubRepo: GithubRepo): Promise<RepositoryRoot> => {
     const repositoryFiles = await getRepositoryFiles(githubRepo);
-    const repository: RepositoryFolder = {
+    let repository: RepositoryRoot = {
       kind: 'folder' as const,
       name: `${githubRepo.org}/${githubRepo.repo}`,
       files: [],
       folders: [],
+      size: 0,
     };
     let current: RepositoryItem;
+    let repoSize = 0;
 
     for (const fileInfo of repositoryFiles) {
       // ignore pax_global_header file that contains info about the gzip
@@ -104,6 +110,7 @@ export const repoService = {
                   extension: segment.split('.').at(-1)
                 }
 
+                repoSize += fileInfo.size;
                 current.files.push(childItem);
               } else {
                 childItem = {
@@ -123,6 +130,7 @@ export const repoService = {
       }
     }
 
+    repository.size = repoSize;
     return repository;
   }
 };

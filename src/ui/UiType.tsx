@@ -68,7 +68,7 @@ export const UiType = ({
           className={styles.uiType}
           style={{ backgroundColor: `oklch(${color.l}% 0.2 ${color.hue})` }}
         />
-        <p>{kind}</p>
+        { kind && <p>{kind}</p> }
         <p className={styles.uiTypeNameLevel2}>{name}</p>
       </div>
     );
