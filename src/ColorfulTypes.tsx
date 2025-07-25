@@ -97,8 +97,8 @@ export function ColorfulTypes(): ReactNode {
 
   return (
     <>
-      <h1>Colorful types</h1>
-      <h2>{githubRepo.org}/{githubRepo.repo}</h2>
+      <h2>Colorful types</h2>
+      <h1>{githubRepo.org}/{githubRepo.repo}</h1>
 
       <div className={styles.uiLayout}>
         <div className={styles.uiCodebase}>
