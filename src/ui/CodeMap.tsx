@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-import { repoService, RepositoryFolder } from "../utils/repoService";
+import { repoService, RepositoryRoot } from "../utils/repoService";
 import { UiFolder } from "./UiFolder";
 import { UiFile } from "./UiFile";
 
@@ -12,12 +12,7 @@ export const CodeMap = () => {
     throw new Error("Org and repo required");
   }
 
-  const [repoFolder, setRepoFolder] = useState<RepositoryFolder>({
-    kind: 'folder',
-    name: `${org}/${repo}`,
-    files: [],
-    folders: [],
-  });
+  const [repoRoot, setRepoRoot] = useState<RepositoryRoot | undefined>();
 
   useEffect(() => {
     const getRepoTree = async (): Promise<void> => {
@@ -28,7 +23,7 @@ export const CodeMap = () => {
       //   ['.tsx', '.ts'],
       // );
 
-      setRepoFolder(tree);
+      setRepoRoot(tree);
     };
 
     getRepoTree();
@@ -36,14 +31,20 @@ export const CodeMap = () => {
 
   return (
     <>
-      <h1>Code map</h1>
+      <h2>Code map</h2>
 
-      {repoFolder.folders.map(folder =>
-        <UiFolder folder={folder} key={folder.name} />
-      )}
+      <h1>{org}/{repo}</h1>
 
-      {repoFolder.files.map(file =>
-        <UiFile file={file} key={file.name} />
+      {repoRoot && (
+        <>
+          {repoRoot.folders.map(folder =>
+            <UiFolder folder={folder} key={folder.name} />
+          )}
+
+          {repoRoot.files.map(file =>
+            <UiFile file={file} key={file.name} />
+          )}
+        </>
       )}
     </>
   )
