@@ -1,0 +1,20 @@
+import {TypeComponentProps} from "../../../types/interface.ts";
+import { CodeBlock } from "../CodeBlock.tsx";
+
+function LexicalDeclaration(props: TypeComponentProps) {
+  const data = props.data;
+  // console.log(data);
+
+  return (
+    <span className="LexicalDeclaration">
+      <span className="LexicalDeclaration__variableType">
+        {data.children[0].text}{" "}
+      </span>
+      <span className="LexicalDeclaration__variableName">
+        <CodeBlock info={data.children[1]} />
+      </span>
+    </span>
+  );
+}
+
+export default LexicalDeclaration;

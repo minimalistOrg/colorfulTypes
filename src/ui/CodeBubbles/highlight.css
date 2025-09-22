@@ -1,0 +1,211 @@
+:root {
+  --variableType: #859900;
+  --variableName: #6c71c4;
+  --fnDefinition: #2aa198;
+  --numberType: #d33682;
+  --stringType: #b58900;
+  --FnParams: #895903;
+  --purple: #9c27b0;
+  --ReservedWords: #e91e63;
+  --comment: #657e99;
+  --boolean: #008d32;
+  --ShorthandPropertyidentifierPattern: #8080e1;
+  --identifier: #444343;
+  --property_identifier: #d2691e;
+
+  /**/
+  --color-1: rgba(71, 159, 248, 0.3);
+  --color-2: rgba(110, 221, 202, 0.3);
+  --color-3: hsla(99, 57%, 63%, 0.3);
+  --color-4: hsla(25, 91%, 73%, 0.3);
+  --color-5: hsla(9, 81%, 64%, 0.3);
+  --color-6: rgba(235, 83, 159, 0.3);
+  --color-7: rgba(169, 129, 208, 0.3);
+}
+
+.color-1 {
+  background: var(--color-1) !important;
+}
+.color-2 {
+  background: var(--color-2) !important;
+}
+.color-3 {
+  background: var(--color-3) !important;
+}
+.color-4 {
+  background: var(--color-4) !important;
+}
+.color-5 {
+  background: var(--color-5) !important;
+}
+.color-6 {
+  background: var(--color-6) !important;
+}
+.color-7 {
+  background: var(--color-7) !important;
+}
+
+.CallExpression:hover,
+.CallExpressionHover,
+.identifier:hover,
+.identifierHover {
+  background-color: var(--bg-highligth-function);
+  transition: var(--bgt-bubble-header);
+}
+
+.CallExpression > .identifier {
+  background-color: transparent !important;
+  transition: transparent;
+  padding: 0px;
+}
+
+.CodeBlockHover {
+  box-shadow: var(--bs-bubble) !important;
+  transition: var(--bst-bubble);
+}
+
+.CodeBlock__header:hover,
+.CodeBlock__header--hover {
+  background-color: var(--bg-bubble-header) !important;
+  transition: var(--bgt-bubble-header);
+}
+
+.CallExpression {
+  padding: 3px;
+}
+
+.identifier {
+  cursor: pointer;
+  padding: 3px;
+  color: var(--identifier);
+}
+
+.LexicalDeclaration__variableType {
+  color: var(--variableType);
+}
+
+.LexicalDeclaration__variableName > .VariableDeclarator .identifier {
+  color: var(--variableName);
+}
+
+.CallExpression > .identifier, .TagExpression > .identifier {
+  color: var(--fnDefinition) !important;
+  cursor: pointer;
+}
+
+.CallExpression > .identifier:hover {
+  text-decoration: underline;
+}
+
+.arguments .identifier {
+  color: var(--FnParams) !important;
+  font-style: italic;
+}
+
+.NumberType {
+  color: var(--numberType);
+}
+
+.string {
+  color: var(--stringType);
+}
+
+.CommentType {
+  color: var(--comment);
+}
+
+.StatementBlock__line {
+  padding: 3px;
+}
+
+.ReturnStatement__text {
+  color: var(--purple);
+}
+
+.ReservedWords {
+  color: var(--ReservedWords);
+}
+
+.TemplateString {
+  color: var(--stringType);
+}
+
+.TypeBoolean {
+  color: var(--boolean);
+}
+
+.property_identifier{
+  color: var(--property_identifier);
+}
+
+.TypeShorthandPropertyidentifierPattern {
+  color: var(--ShorthandPropertyidentifierPattern);
+}
+
+.IfStatement > .StatementBlock .StatementBlock__line:first-child {
+  display: none;
+}
+
+.IfStatement > .StatementBlock .StatementBlock__line:last-child {
+  display: none;
+}
+
+.ElseClause > .StatementBlock .StatementBlock__line:first-child {
+  display: none;
+}
+
+.ElseClause > .StatementBlock .StatementBlock__line:last-child {
+  display: none;
+}
+
+.ArrowFunction > span > .StatementBlock .StatementBlock__line:first-child {
+  display: none;
+}
+
+.ArrowFunction > span > .StatementBlock .StatementBlock__line:last-child {
+  display: none;
+}
+
+.WhileStatement .StatementBlock .StatementBlock__line:first-child{
+  display: flex;
+}
+
+.WhileStatement .StatementBlock .StatementBlock__line:last-child{
+  display: flex;
+}
+
+.DoStatement .StatementBlock .StatementBlock__line:first-child{
+  display: flex;
+}
+
+.DoStatement .StatementBlock .StatementBlock__line:last-child{
+  display: flex;
+}
+
+.ForInStatement .StatementBlock .StatementBlock__line:first-child{
+  display: flex;
+}
+
+.ForInStatement .StatementBlock .StatementBlock__line:last-child{
+  display: flex;
+}
+
+.TryStatement .StatementBlock .StatementBlock__line:first-child{
+  display: flex;
+}
+
+.TryStatement .StatementBlock .StatementBlock__line:last-child{
+  display: flex;
+}
+
+.function_declaration .StatementBlock .StatementBlock__line:first-child{
+  display: flex;
+}
+
+.function_declaration .StatementBlock .StatementBlock__line:last-child{
+  display: flex;
+}
+
+.type_identifier{
+  color: #177a9b;
+}
