@@ -65,7 +65,7 @@ const UniversalType = (props: any) => {
         {data.children.map((e: any, index: number) => {
           return (
             <span key={index}>
-              <CodeBlock info={e} />
+              <CodeBlock code={e} />
             </span>
           )
         })}
@@ -77,9 +77,9 @@ const UniversalType = (props: any) => {
 }
 
 export const CodeBlock = (props: {
-  info: any
+  code: any
 }) => {
-  const { info } = props
+  const { code: info } = props
 
   switch (info.type) {
     // Types

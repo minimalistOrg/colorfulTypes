@@ -10,7 +10,7 @@ export const StatementBlock = ({ data }: TypeComponentProps) => {
       {
         statementBlockChildren.map((child, index) => {
           return (
-            <CodeBlock info={child} key={index} />
+            <CodeBlock code={child} key={index} />
           )
         })
       }

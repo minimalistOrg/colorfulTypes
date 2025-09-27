@@ -8,7 +8,7 @@ function ReturnStatement(props: TypeComponentProps) {
     <>
       <span className="ReturnStatement__text">return </span>
       <span>
-        <CodeBlock info={data.children[1]} />
+        <CodeBlock code={data.children[1]} />
       </span>
     </>
   );

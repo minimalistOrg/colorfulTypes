@@ -27,7 +27,7 @@ export const CodeMap = () => {
     };
 
     getRepoTree();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -47,5 +47,5 @@ export const CodeMap = () => {
         </>
       )}
     </>
-  )
+  );
 }

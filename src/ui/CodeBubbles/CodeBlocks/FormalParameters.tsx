@@ -10,7 +10,7 @@ function FormalParameters(props: TypeComponentProps & {type:string}) {
       {data.children.map((e: TreesitterData, index: number) => {
         return (
           <span key={index}>
-            <CodeBlock info={e} />
+            <CodeBlock code={e} />
           </span>
         );
       })}

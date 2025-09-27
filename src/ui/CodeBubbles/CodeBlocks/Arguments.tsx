@@ -8,7 +8,7 @@ export const Arguments = ({ data }: TypeComponentProps) => {
         data.children.map((child, index) => {
           return (
             <span key={index}>
-              <CodeBlock info={child} />
+              <CodeBlock code={child} />
             </span>
           )
         })

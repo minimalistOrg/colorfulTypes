@@ -11,7 +11,7 @@ function ArrowFunction(props: TypeComponentProps) {
         <>
           <span>{"{"}</span>
           <span>
-            <CodeBlock info={data.children[2]} />
+            <CodeBlock code={data.children[2]} />
           </span>
           <span>{"}"}</span>
         </>
@@ -19,7 +19,7 @@ function ArrowFunction(props: TypeComponentProps) {
     } else {
       return (
         <span>
-          <CodeBlock info={data.children[2]} />
+          <CodeBlock code={data.children[2]} />
         </span>
       );
     }
@@ -29,10 +29,10 @@ function ArrowFunction(props: TypeComponentProps) {
   return (
     <span className="ArrowFunction">
       <span>
-        <CodeBlock info={data.children[0]} />
+        <CodeBlock code={data.children[0]} />
       </span>
       <span>
-        <CodeBlock info={data.children[1]} />
+        <CodeBlock code={data.children[1]} />
       </span>
       {checkBlock()}
     </span>

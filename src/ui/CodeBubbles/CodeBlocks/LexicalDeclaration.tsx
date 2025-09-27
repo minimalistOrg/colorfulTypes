@@ -11,7 +11,7 @@ function LexicalDeclaration(props: TypeComponentProps) {
         {data.children[0].text}{" "}
       </span>
       <span className="LexicalDeclaration__variableName">
-        <CodeBlock info={data.children[1]} />
+        <CodeBlock code={data.children[1]} />
       </span>
     </span>
   );

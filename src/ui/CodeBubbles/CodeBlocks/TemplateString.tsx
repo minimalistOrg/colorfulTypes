@@ -26,7 +26,7 @@ function TemplateString(props: TypeComponentProps) {
         return (
           <span key={index}>
             <>
-              <CodeBlock info={e} />
+              <CodeBlock code={e} />
               <span>{stringtxt[index]}</span>
             </>
           </span>

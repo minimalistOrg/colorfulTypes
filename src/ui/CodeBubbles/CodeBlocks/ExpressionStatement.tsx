@@ -5,7 +5,7 @@ function ExpressionStatement(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data)
 
-  return <CodeBlock info={data.children[0]} />;
+  return <CodeBlock code={data.children[0]} />;
 }
 
 export default ExpressionStatement;

@@ -17,11 +17,21 @@ export interface CodebasePosition {
   end: Parser.Point;
 }
 
-export interface MyFunction {
+export interface MyBaseFunction {
+  kind: string;
   name: string;
   parameters: MyParameter[];
   returnType: MyReturnType;
+  body?: any;
   codebasePosition: CodebasePosition;
+}
+
+export interface MyFunction extends MyBaseFunction {
+  kind: 'function';
+}
+
+export interface MyArrowFunction extends MyBaseFunction {
+  kind: 'arrowFunction';
 }
 
 export interface MyType {
@@ -33,7 +43,7 @@ export interface MyType {
 export interface MyFile {
   filename: string;
   myTypes: MyType[];
-  myFunctions: MyFunction[];
+  myFunctions: MyBaseFunction[];
 }
 
 export interface Codebase {
@@ -66,21 +76,30 @@ const buildReturnType = (returnNode: SyntaxNode | undefined): MyReturnType => {
   };
 }
 
-export const buildArrowFunction = (capture: QueryCapture): MyFunction => {
-  const functionParameters = capture.
+export const buildArrowFunction = (capture: QueryCapture): MyArrowFunction => {
+  const arrowFunction = capture.
     node.
-    children.find(node => node.type === 'arrow_function')?.
+    children.find(node => node.type === 'arrow_function');
+
+  const functionParameters = arrowFunction?.
     children.find(node => node.type === 'formal_parameters')?.
     children || [];
-  const returnNode = capture.
-    node.
-    children.find(node => node.type === 'arrow_function')?.
+  const returnNode = arrowFunction?.
     children.find(node => node.type === 'type_annotation');
+  let bodyNode = arrowFunction?.
+    children.find(node => node.type === 'statement_block');
+
+  // Single line arrow function
+  if (bodyNode === undefined && arrowFunction?.childCount === 3) {
+    bodyNode = arrowFunction?.children[2];
+  }
 
   return {
+    kind: 'arrowFunction',
     name: capture.node.children.find(node => node.type === 'identifier')?.text || 'ERROR',
     parameters: buildParameters(functionParameters),
     returnType: buildReturnType(returnNode),
+    body: bodyNode,
     codebasePosition: {
       start: capture.node.startPosition,
       end: capture.node.endPosition,
@@ -94,11 +113,16 @@ export const buildFunction = (capture: QueryCapture): MyFunction => {
     children.find(node => node.type === 'formal_parameters')?.
     children || [];
   const returnNode = capture.node.children.find(node => node.type === 'type_annotation');
+  const bodyNode = capture.
+    node.
+    children.find(node => node.type === 'statement_block');
 
   return {
+    kind: 'function',
     name: capture.node.children.find(node => node.type === 'identifier')?.text || 'ERROR',
     parameters: buildParameters(functionParameters),
     returnType: buildReturnType(returnNode),
+    body: bodyNode,
     codebasePosition: {
       start: capture.node.startPosition,
       end: capture.node.endPosition,
@@ -129,7 +153,7 @@ export const buildEnum = (capture: QueryCapture): MyType => {
 };
 
 const buildFile = (captures: QueryCapture[], filename: string): MyFile => {
-  const myFunctions: MyFunction[] = [];
+  const myFunctions: MyBaseFunction[] = [];
   const myTypes: MyType[] = [];
 
   captures.forEach(capture => {
@@ -160,7 +184,11 @@ export const parse = async (
   repoContent: FileInfo[],
   extensions: string[],
 ): Promise<Codebase> => {
-  await Parser.init();
+  await Parser.init({
+    locateFile(scriptName: string, _scriptDirectory: string) {
+      return `/${scriptName}`;
+    },
+  });
   const parser = new Parser();
 
   const Tsx = await Parser.Language.load('/tree-sitter-languages/tree-sitter-tsx.wasm');

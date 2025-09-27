@@ -10,7 +10,7 @@ function IfStatement(props: TypeComponentProps) {
       return (
         <span>
           {" "}
-          <CodeBlock info={data.children[3]} />{" "}
+          <CodeBlock code={data.children[3]} />{" "}
         </span>
       );
     }
@@ -19,14 +19,14 @@ function IfStatement(props: TypeComponentProps) {
   return (
     <span className="IfStatement">
       <span>
-        <CodeBlock info={data.children[0]} />
+        <CodeBlock code={data.children[0]} />
       </span>
       <span>
         {" "}
-        <CodeBlock info={data.children[1]} />{" "}
+        <CodeBlock code={data.children[1]} />{" "}
       </span>
       <span>{"{"}</span>
-      <CodeBlock info={data.children[2]} />
+      <CodeBlock code={data.children[2]} />
       <span>{"}"}</span>
       {checkelse()}
     </span>

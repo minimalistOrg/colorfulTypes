@@ -12,7 +12,7 @@ function SwitchBody(props: TypeComponentProps) {
       {data.children.map((e: TreesitterData, index: number) => {
         return (
           <span key={index}>
-            <CodeBlock info={e} />
+            <CodeBlock code={e} />
           </span>
         );
       })}

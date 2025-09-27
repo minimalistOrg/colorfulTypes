@@ -98,7 +98,7 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
       data-test-id="fncall"
     >
       <div className={ResponsiveStyles.blockStart}>
-        <CodeBlock info={memberExpression} />
+        <CodeBlock code={memberExpression} />
 
         <div>{openParenthesis.text}</div>
       </div>
@@ -107,7 +107,7 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
         {
           functionArguments.map((functionArgument, index) => {
             return (
-              <CodeBlock info={functionArgument} key={index} />
+              <CodeBlock code={functionArgument} key={index} />
             )
           })
         }

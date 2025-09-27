@@ -8,11 +8,11 @@ function ElseClause(props: TypeComponentProps) {
   return (
     <span className="ElseClause">
       <span>
-        <CodeBlock info={data.children[0]} />
+        <CodeBlock code={data.children[0]} />
       </span>
       <span>{" {"}</span>
 
-      <CodeBlock info={data.children[1]} />
+      <CodeBlock code={data.children[1]} />
         <span>{"}"}</span>
     </span>
   );
