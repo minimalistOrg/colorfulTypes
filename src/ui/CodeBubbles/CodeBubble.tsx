@@ -4,7 +4,6 @@ import { Codebase, parse } from "../../utils/parser";
 import { repoService } from "../../utils/repoService";
 import { CodeBlock } from "./CodeBlock";
 import { CollapseIcon } from "../Icons/CollapseIcon";
-import { CloseIcon } from "../Icons/CloseIcon";
 
 export const CodeBubble = () => {
   const { org, repo } = useParams();

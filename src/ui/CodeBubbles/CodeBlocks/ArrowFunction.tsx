@@ -3,7 +3,7 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function ArrowFunction(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
+
   function checkBlock() {
     // console.log(data.children[2].type)
     if ("statement_block" === data.children[2].type) {

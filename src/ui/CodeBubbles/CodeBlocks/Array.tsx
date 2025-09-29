@@ -3,7 +3,6 @@ import { TreesitterData, TypeComponentProps } from "../../../types/interface.ts"
 
 function Array(props: TypeComponentProps): JSX.Element {
   const data: TreesitterData = props.data;
-  // console.log(data);
 
   return (
     <span className="Array">

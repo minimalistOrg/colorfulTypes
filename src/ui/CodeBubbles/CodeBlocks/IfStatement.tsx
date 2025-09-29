@@ -3,8 +3,7 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function IfStatement(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
-  //
+
   function checkelse() {
     if (data.children.length > 3) {
       return (

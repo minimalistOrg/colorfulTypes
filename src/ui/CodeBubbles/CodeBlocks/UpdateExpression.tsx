@@ -4,7 +4,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function UpdateExpression(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className="UpdateExpression">

@@ -4,7 +4,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function JsxOpeningElement(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className="JsxOpeningElement">

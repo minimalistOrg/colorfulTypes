@@ -3,7 +3,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function PairPattern(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className="PairPattern">

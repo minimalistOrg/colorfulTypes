@@ -3,8 +3,8 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function ReturnStatement(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
-  return (
+
+    return (
     <>
       <span className="ReturnStatement__text">return </span>
       <span>

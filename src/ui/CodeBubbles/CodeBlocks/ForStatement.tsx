@@ -3,7 +3,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function ForStatement(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className="ForStatement">

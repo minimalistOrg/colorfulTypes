@@ -3,7 +3,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function SwitchCase(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <div className="SwitchCase">

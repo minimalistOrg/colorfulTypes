@@ -3,7 +3,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function TemplateSubstitution(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span>

@@ -5,7 +5,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function SwitchDefault(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className="SwitchDefault">

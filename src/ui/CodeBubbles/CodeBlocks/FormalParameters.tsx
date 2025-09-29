@@ -3,7 +3,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function FormalParameters(props: TypeComponentProps & {type:string}) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className={props.type} >

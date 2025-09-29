@@ -3,7 +3,6 @@ import { CodeBlock } from "../CodeBlock.tsx";
 
 function LexicalDeclaration(props: TypeComponentProps) {
   const data = props.data;
-  // console.log(data);
 
   return (
     <span className="LexicalDeclaration">
